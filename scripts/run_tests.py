@@ -30,7 +30,12 @@ class Tee(io.TextIOBase):
 
     def flush(self):
         for stream in self.streams:
-            stream.flush()
+            # O coletor do Python pode finalizar este Tee depois que o arquivo
+            # de log já foi fechado pelo gerenciador de contexto.
+            try:
+                stream.flush()
+            except ValueError:
+                pass
 
 
 def git_metadata():
