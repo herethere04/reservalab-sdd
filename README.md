@@ -2,6 +2,10 @@
 
 API simples para reservar salas de estudo, impedir conflitos de horário e cancelar reservas. Projeto acadêmico da **Entrega 1: Ambiente, Especificação Técnica e Test Harness**, desenvolvido com fluxo SDD e auxílio do Codex.
 
+**Repositório público:** <https://github.com/herethere04/reservalab-sdd>
+
+**Pull Request da entrega:** [#9 — feature/entrega-inicial → develop](https://github.com/herethere04/reservalab-sdd/pull/9)
+
 **Estado da entrega:** implementação disponível em [`feature/entrega-inicial`](https://github.com/herethere04/reservalab-sdd/tree/feature/entrega-inicial), aguardando revisão humana antes da integração. `main` e `develop` estão protegidas. A existência de código e testes aprovados não substitui a colaboração dos integrantes.
 
 ## Equipe
@@ -73,7 +77,7 @@ skipped: 0
 success: true
 ```
 
-Esta evidência corresponde à execução local após revisão técnica e antes do primeiro commit de implementação. Seu manifesto identifica os arquivos testados. O status e o link da execução no contêiner serão registrados em [EXECUTION.md](docs/EXECUTION.md).
+Esta evidência corresponde à execução local após revisão técnica e antes do primeiro commit de implementação. Seu manifesto identifica os arquivos testados. A [execução corrigida do pipeline](https://github.com/herethere04/reservalab-sdd/actions/runs/34387758154) também aprovou os 46 testes no ambiente Docker com CPython 3.13.7; detalhes, duração e identificação do artefato estão em [EXECUTION.md](docs/EXECUTION.md).
 
 ## Contrato resumido
 
@@ -124,6 +128,28 @@ O histórico foi inicializado em uma branch de trabalho, renomeada para `bootstr
 As duas branches exigem PR com **uma aprovação de outra pessoa**, check `harness` aprovado e conversas resolvidas; as regras incluem administradores. Novos commits invalidam aprovações antigas. A revisão do último push deve ser feita por outra pessoa. Nenhum merge deve ocorrer antes disso.
 
 O Codex desktop auxiliou na especificação, geração de código, testes e revisão técnica com agentes de escopo separado. [AGENTS.md](AGENTS.md) contém instruções SDD; [AI_WORKFLOW.md](docs/AI_WORKFLOW.md) documenta uso, prompts e limites. Os colegas devem revisar e assumir suas contribuições; não há aprovações simuladas.
+
+## Atendimento aos requisitos da Entrega 1
+
+| Requisito da atividade | Evidência verificável | Situação |
+| --- | --- | --- |
+| Repositório e branches `main`, `develop` e `feature/*` | [Repositório](https://github.com/herethere04/reservalab-sdd), [PR #9](https://github.com/herethere04/reservalab-sdd/pull/9) e histórico Git | Configurado |
+| Proibição de commits diretos na principal | Proteções de `main` e `develop`: PR, uma aprovação, check `harness` e conversas resolvidas | Configurado |
+| Divisão de tarefas da sprint | [Issues](https://github.com/herethere04/reservalab-sdd/issues), [SPRINT.md](docs/SPRINT.md) e [TEAM.md](docs/TEAM.md) | Registrado |
+| Code review e aprovação antes do merge | [PR #9](https://github.com/herethere04/reservalab-sdd/pull/9) com proteção de branch | **Pendente de ação dos colegas** |
+| README com visão geral, instalação, execução e ADRs | Este arquivo e [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Atendido |
+| Especificação detalhada, RF/RNF, regras e contratos | [SPEC.md](docs/SPEC.md) | Atendido |
+| Componentes e APIs isoladas | [ARCHITECTURE.md](docs/ARCHITECTURE.md) e seção de decomposição da especificação | Atendido |
+| Refinamentos motivados por testes/revisão | [REFINEMENTS.md](docs/REFINEMENTS.md), com casos, decisões e testes de regressão | Atendido; feedback humano ainda pendente |
+| Ferramenta de IA e fluxo SDD documentados | [AGENTS.md](AGENTS.md) e [AI_WORKFLOW.md](docs/AI_WORKFLOW.md) | Atendido |
+| Ambiente reproduzível | [Dockerfile](Dockerfile), [compose.yaml](compose.yaml) e scripts de execução | Atendido |
+| Harness e testes principais/de borda | [scripts/run_tests.py](scripts/run_tests.py), [tests](tests) e 46 casos automatizados | Atendido |
+| Logs da execução | [Log local](evidence/post-review-local/tests.log), [resumo JSON](evidence/post-review-local/summary.json), [relatório](docs/EXECUTION.md) e [GitHub Actions](https://github.com/herethere04/reservalab-sdd/actions/runs/34387758154) | Atendido |
+| PDF único de submissão | PDF preparado com URL, equipe, ambiente, IA, comandos e evidências | Preparado; cada integrante deve enviar no Moodle |
+
+### Ações obrigatórias dos integrantes
+
+Os artefatos técnicos estão preparados, mas a exigência de colaboração só fica comprovada quando cada colega aceita o convite do GitHub, registra sua conferência na Issue correspondente e ao menos um integrante revisa e aprova o commit final do PR #9 com sua própria conta. Depois disso, o grupo deve integrar o PR em `develop`, promover `develop` para `main` por outro PR revisado e conferir se o PDF aponta para a versão final. Cada um dos quatro integrantes deve submeter o mesmo PDF no Moodle.
 
 ## Limites e submissão
 
