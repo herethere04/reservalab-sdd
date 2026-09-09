@@ -6,11 +6,11 @@ Em 2026-09-09, o harness executou 46 testes com sucesso em Windows e CPython 3.1
 
 ## Execução padronizada no GitHub Actions
 
-O [pipeline do PR #9](https://github.com/herethere04/reservalab-sdd/actions/runs/34387463673) foi executado em 2026-09-09 e concluído com sucesso. O job `harness` construiu a imagem do Dockerfile com CPython 3.13.7 e executou os **46 testes** dentro do contêiner Linux: 0 falhas, 0 erros e 0 ignorados, em 7,831 segundos. As etapas de checkout, build, harness e publicação de logs foram aprovadas.
+O [pipeline após a correção do PR #9](https://github.com/herethere04/reservalab-sdd/actions/runs/34387758154) foi executado em 2026-09-09 e concluído com sucesso. O job `harness` construiu a imagem do Dockerfile com CPython 3.13.7 e executou os **46 testes** dentro do contêiner Linux: 0 falhas, 0 erros e 0 ignorados, em 7,330 segundos. As etapas de checkout, build, harness e publicação de logs foram aprovadas.
 
-O artefato `harness-34387463673` contém `tests.log` e `summary.json`, tem digest SHA-256 `13f7f7a98881bff23b17bd2c19b3ab3497eed27cd2441473d023f66f093c6f67` e fica disponível no GitHub por 30 dias. O manifesto dos 12 arquivos executados foi `d2a79fd1159db24ee9d92acc9911e0b503d4c78d1ae2ad9847ebe20014206862`.
+O artefato `harness-34387758154` contém `tests.log` e `summary.json`, tem digest SHA-256 `dc37bc39e1e06ee6e3c4007490e6384b34b2f10b9a14db9ce75a82a272edca86` e fica disponível no GitHub por 30 dias.
 
-O log também revelou uma mensagem tardia e inofensiva ao finalizar o espelho de saída depois do fechamento do arquivo. O harness foi ajustado para tolerar essa ordem de finalização; a nova execução do PR deve confirmar a ausência da mensagem.
+Uma execução anterior revelou uma mensagem tardia e inofensiva ao finalizar o espelho de saída depois do fechamento do arquivo. O harness foi ajustado para tolerar essa ordem; o pipeline final confirmou a correção sem repetir a mensagem.
 
 ## Governança
 
