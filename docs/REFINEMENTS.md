@@ -43,9 +43,37 @@ Novos registros devem indicar o caso observado, resultado anterior, decisão, re
 
 ## Feedback do grupo
 
-**Pendente de revisão humana.** Cada integrante deve registrar o comentário e o link do PR/Issue correspondente. Uma validação sem mudança também pode ser documentada, desde que descreva o que foi conferido e a evidência real.
+**ID:** RFN-010
+**Autor e origem:** Gabriel Ferreira Costa / Validação local com cURL (Issue E1-02)
+**Requisito afetado:** RN-12 (Campos de entrada)
+**Problema observado:** Teste de injeção de campo extra (`campo_inventado`) no payload de criação. Expectativa: rejeição com 400. Resultado real: `{"error": {"code": "invalid_payload", "message": "Informe exatamente room_id, student_name, starts_at, ends_at e participants."}}`.
+**Decisão:** Manutenção justificada. A implementação cumpre perfeitamente a especificação.
+**Evidência:** Execução local validada; log anexado ao PR final.
+**Revisor humano:** Gabriel Ferreira Costa
 
-Modelo de registro a preencher:
+**ID:** RFN-011
+**Autor e origem:** Gabriel Ferreira Costa / Validação local com cURL (Issue E1-02)
+**Requisito afetado:** RN-04 (Capacidade)
+**Problema observado:** Teste de reserva para 5 pessoas na Sala 1 (limite 4). Expectativa: rejeição com 400. Resultado real: `{"error": {"code": "invalid_participants", "message": "O número de participantes excede a capacidade da sala."}}`.
+**Decisão:** Manutenção justificada. Regra de negócio respeitada.
+**Evidência:** Execução local validada.
+**Revisor humano:** Gabriel Ferreira Costa
+
+**ID:** RFN-012
+**Autor e origem:** Gabriel Ferreira Costa / Validação local com cURL (Issue E1-02)
+**Requisito afetado:** RN-05 e RN-07 (Fuso e Duração)
+**Problema observado:** Criação de reserva de 90 minutos usando offset `-03:00`. Expectativa: sucesso (201) e datas normalizadas para UTC (`Z`). Resultado real: `{"id": "25f2c241-7e4a-463f-903f-efd843674760", "room_id": 1, "student_name": "Gabriel", "starts_at": "2026-12-01T17:00:00Z", "ends_at": "2026-12-01T18:30:00Z", "participants": 2, "status": "active"}`.
+**Decisão:** Manutenção justificada. O sistema calcula e persiste o UTC corretamente.
+**Evidência:** Execução local validada.
+**Revisor humano:** Gabriel Ferreira Costa
+
+**ID:** RFN-013
+**Autor e origem:** Gabriel Ferreira Costa / Validação local com cURL (Issue E1-02)
+**Requisito afetado:** RN-11 e RF-06 (Cancelamento)
+**Problema observado:** Requisição DELETE para o ID gerado na RFN-012. Expectativa: sucesso (200) e status cancelado. Resultado real retornado corretamente com `"status": "cancelled"`. 
+**Decisão:** Manutenção justificada. Cancelamento lógico funcional e idempotente.
+**Evidência:** Execução local validada.
+**Revisor humano:** Gabriel Ferreira Costa
 
 ```text
 ID: RFN-010
