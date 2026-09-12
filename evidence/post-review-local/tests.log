@@ -1,0 +1,128 @@
+ReservaLab | execução real do harness unittest
+UTC: 2026-09-09T16:35:58.737410Z
+Python: 3.12.14 (CPython)
+Platform: Windows-11-10.0.26200-SP0
+Git HEAD: indisponível
+Working tree dirty: None
+Source manifest SHA-256: be4777520fd0a01952ff573d13c90d34b94d8164944866cdfd386776b366c8eb
+
+test_body_above_16_kib_is_rejected (tests.test_http.HttpIntegrationTests.test_body_above_16_kib_is_rejected) ... 127.0.0.1 - - [09/Sep/2026 13:35:58] "POST /bookings HTTP/1.1" 413 -
+ok
+test_enormous_unknown_room_id_is_a_client_error (tests.test_http.HttpIntegrationTests.test_enormous_unknown_room_id_is_a_client_error) ... 127.0.0.1 - - [09/Sep/2026 13:35:59] "POST /bookings HTTP/1.1" 404 -
+ok
+test_full_create_list_conflict_cancel_and_rebook_lifecycle (tests.test_http.HttpIntegrationTests.test_full_create_list_conflict_cancel_and_rebook_lifecycle) ... 127.0.0.1 - - [09/Sep/2026 13:36:00] "GET /bookings HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "POST /bookings HTTP/1.1" 201 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "GET /bookings HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "POST /bookings HTTP/1.1" 409 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "DELETE /bookings/48cbedf3-6b4a-4265-aa4b-30ce1c4be371 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "DELETE /bookings/48cbedf3-6b4a-4265-aa4b-30ce1c4be371 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "POST /bookings HTTP/1.1" 201 -
+ok
+test_health_and_seed_rooms (tests.test_http.HttpIntegrationTests.test_health_and_seed_rooms) ... 127.0.0.1 - - [09/Sep/2026 13:36:00] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2026 13:36:00] "GET /rooms HTTP/1.1" 200 -
+ok
+test_invalid_utf8_json_is_rejected (tests.test_http.HttpIntegrationTests.test_invalid_utf8_json_is_rejected) ... 127.0.0.1 - - [09/Sep/2026 13:36:01] "POST /bookings HTTP/1.1" 400 -
+ok
+test_json_array_is_rejected (tests.test_http.HttpIntegrationTests.test_json_array_is_rejected) ... 127.0.0.1 - - [09/Sep/2026 13:36:01] "POST /bookings HTTP/1.1" 400 -
+ok
+test_json_content_type_with_charset_is_accepted (tests.test_http.HttpIntegrationTests.test_json_content_type_with_charset_is_accepted) ... 127.0.0.1 - - [09/Sep/2026 13:36:02] "POST /bookings HTTP/1.1" 201 -
+ok
+test_json_validation_errors_are_structured (tests.test_http.HttpIntegrationTests.test_json_validation_errors_are_structured) ... 127.0.0.1 - - [09/Sep/2026 13:36:02] "POST /bookings HTTP/1.1" 400 -
+127.0.0.1 - - [09/Sep/2026 13:36:02] "POST /bookings HTTP/1.1" 400 -
+ok
+test_malformed_json_is_rejected (tests.test_http.HttpIntegrationTests.test_malformed_json_is_rejected) ... 127.0.0.1 - - [09/Sep/2026 13:36:03] "POST /bookings HTTP/1.1" 400 -
+ok
+test_nonfinite_json_numbers_are_rejected (tests.test_http.HttpIntegrationTests.test_nonfinite_json_numbers_are_rejected) ... 127.0.0.1 - - [09/Sep/2026 13:36:04] "POST /bookings HTTP/1.1" 400 -
+127.0.0.1 - - [09/Sep/2026 13:36:04] "POST /bookings HTTP/1.1" 400 -
+127.0.0.1 - - [09/Sep/2026 13:36:04] "POST /bookings HTTP/1.1" 400 -
+ok
+test_unknown_room_booking_and_route_return_not_found (tests.test_http.HttpIntegrationTests.test_unknown_room_booking_and_route_return_not_found) ... 127.0.0.1 - - [09/Sep/2026 13:36:04] "POST /bookings HTTP/1.1" 404 -
+127.0.0.1 - - [09/Sep/2026 13:36:04] "DELETE /bookings/00000000-0000-0000-0000-000000000000 HTTP/1.1" 404 -
+127.0.0.1 - - [09/Sep/2026 13:36:04] "GET /missing HTTP/1.1" 404 -
+ok
+test_unpaired_unicode_surrogate_is_a_client_error (tests.test_http.HttpIntegrationTests.test_unpaired_unicode_surrogate_is_a_client_error) ... 127.0.0.1 - - [09/Sep/2026 13:36:05] "POST /bookings HTTP/1.1" 400 -
+ok
+test_unsupported_method_returns_method_not_allowed (tests.test_http.HttpIntegrationTests.test_unsupported_method_returns_method_not_allowed) ... 127.0.0.1 - - [09/Sep/2026 13:36:05] "PUT /bookings HTTP/1.1" 405 -
+ok
+test_wrong_content_type_is_rejected (tests.test_http.HttpIntegrationTests.test_wrong_content_type_is_rejected) ... 127.0.0.1 - - [09/Sep/2026 13:36:06] "POST /bookings HTTP/1.1" 415 -
+ok
+test_adjacent_bookings_are_allowed_on_both_sides (tests.test_service.BookingServiceTests.test_adjacent_bookings_are_allowed_on_both_sides) ... ok
+test_bookings_and_cancellations_persist_on_reopen (tests.test_service.BookingServiceTests.test_bookings_and_cancellations_persist_on_reopen) ... ok
+test_cancel_frees_slot_for_new_booking (tests.test_service.BookingServiceTests.test_cancel_frees_slot_for_new_booking) ... ok
+test_cancel_is_idempotent_and_keeps_audit_record (tests.test_service.BookingServiceTests.test_cancel_is_idempotent_and_keeps_audit_record) ... ok
+test_cancel_unknown_booking_returns_not_found (tests.test_service.BookingServiceTests.test_cancel_unknown_booking_returns_not_found) ... ok
+test_concurrent_same_slot_has_exactly_one_winner (tests.test_service.BookingServiceTests.test_concurrent_same_slot_has_exactly_one_winner) ... ok
+test_create_returns_uuid_and_normalized_booking (tests.test_service.BookingServiceTests.test_create_returns_uuid_and_normalized_booking) ... ok
+test_duration_outside_bounds_is_rejected (tests.test_service.BookingServiceTests.test_duration_outside_bounds_is_rejected) ... ok
+test_every_required_field_must_be_present (tests.test_service.BookingServiceTests.test_every_required_field_must_be_present) ... ok
+test_invalid_or_naive_timestamps_are_rejected_for_both_fields (tests.test_service.BookingServiceTests.test_invalid_or_naive_timestamps_are_rejected_for_both_fields) ... ok
+test_invalid_timezone_offset_minutes_are_rejected (tests.test_service.BookingServiceTests.test_invalid_timezone_offset_minutes_are_rejected) ... ok
+test_maximum_duration_120_minutes_is_allowed (tests.test_service.BookingServiceTests.test_maximum_duration_120_minutes_is_allowed) ... ok
+test_minimum_duration_30_minutes_is_allowed (tests.test_service.BookingServiceTests.test_minimum_duration_30_minutes_is_allowed) ... ok
+test_new_database_starts_without_bookings (tests.test_service.BookingServiceTests.test_new_database_starts_without_bookings) ... ok
+test_non_object_payloads_are_rejected (tests.test_service.BookingServiceTests.test_non_object_payloads_are_rejected) ... ok
+test_non_whole_minutes_are_rejected_for_both_fields (tests.test_service.BookingServiceTests.test_non_whole_minutes_are_rejected_for_both_fields) ... ok
+test_offset_equivalent_time_also_conflicts (tests.test_service.BookingServiceTests.test_offset_equivalent_time_also_conflicts) ... ok
+test_one_participant_is_allowed (tests.test_service.BookingServiceTests.test_one_participant_is_allowed) ... ok
+test_overlap_shapes_are_rejected (tests.test_service.BookingServiceTests.test_overlap_shapes_are_rejected) ... ok
+test_participants_capacity_limits (tests.test_service.BookingServiceTests.test_participants_capacity_limits) ... ok
+test_room_id_above_sqlite_integer_range_is_not_found (tests.test_service.BookingServiceTests.test_room_id_above_sqlite_integer_range_is_not_found) ... ok
+test_room_id_requires_integer_not_boolean (tests.test_service.BookingServiceTests.test_room_id_requires_integer_not_boolean) ... ok
+test_same_slot_in_different_rooms_is_allowed (tests.test_service.BookingServiceTests.test_same_slot_in_different_rooms_is_allowed) ... ok
+test_seed_rooms_have_documented_capacities (tests.test_service.BookingServiceTests.test_seed_rooms_have_documented_capacities) ... ok
+test_start_before_now_is_rejected (tests.test_service.BookingServiceTests.test_start_before_now_is_rejected) ... ok
+test_start_equal_to_now_is_allowed (tests.test_service.BookingServiceTests.test_start_equal_to_now_is_allowed) ... ok
+test_student_name_length_boundaries_are_allowed (tests.test_service.BookingServiceTests.test_student_name_length_boundaries_are_allowed) ... ok
+test_student_name_limits_and_type (tests.test_service.BookingServiceTests.test_student_name_limits_and_type) ... ok
+test_timezone_offset_is_normalized_to_utc (tests.test_service.BookingServiceTests.test_timezone_offset_is_normalized_to_utc) ... ok
+test_unknown_fields_are_rejected (tests.test_service.BookingServiceTests.test_unknown_fields_are_rejected) ... ok
+test_unknown_room_is_not_found (tests.test_service.BookingServiceTests.test_unknown_room_is_not_found) ... ok
+test_unpaired_surrogate_in_student_name_is_rejected (tests.test_service.BookingServiceTests.test_unpaired_surrogate_in_student_name_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 9.040s
+
+OK
+
+Resumo verificável:
+{
+  "timestamp_utc": "2026-09-09T16:35:58.737410Z",
+  "python": "3.12.14",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "git": {
+    "head": null,
+    "working_tree_dirty": null,
+    "repository_at_project_root": false
+  },
+  "source_snapshot": {
+    "algorithm": "sha256",
+    "manifest_sha256": "be4777520fd0a01952ff573d13c90d34b94d8164944866cdfd386776b366c8eb",
+    "file_count": 15,
+    "files": {
+      ".github/workflows/tests.yml": "a2117dc95437f9e5abae28d0c2ad1bfd511c1b39a30241c209f54ea320c0cb08",
+      "Dockerfile": "ef691158cfa774c38f5a5df727ddce5e283dfe125b3c617ac0543ddcd022ad07",
+      "compose.yaml": "d050dd2bce5f3b387a9d4281c627d740740901d982fca0bdb784c46b995f5ee8",
+      "reservalab/__init__.py": "5abd69f7aad177cbbcf3ef8e17c17763178ae7a57e0403aa3f2a85636d6e7089",
+      "reservalab/__main__.py": "f5fe804111bf4d69f85c2a4b2d09e74408f796cdd90893e0ad36315b259b3d9a",
+      "reservalab/domain.py": "11d030d8ada130f8e97265a34794aeb3885854e8525fc8be935cb994ac3de8f3",
+      "reservalab/repository.py": "56c4f82840eb26e6f17d8a47a541e80660ca155ea2f05c817b2354799fe025a7",
+      "reservalab/server.py": "cd0baa6ddc47bfb79472f69d7ec907a5d86c99c71a8c77a54a1dd3432ff8506e",
+      "reservalab/service.py": "bb4832a580bc77a76b6f1c2675c614757b5a6df0e13b8ca8dab4b4ee7549f13e",
+      "scripts/run_tests.py": "33e3a08843366dbb4ffd3540dafa082c6ba5433022fbce9391924f872d892cb0",
+      "scripts/test.ps1": "a3f8064d7b7896ecb58eeb19d4c584cd5f8e6594bbf99fefc48cf1cbcc002bf3",
+      "scripts/test.sh": "da00666f3843fe3536db77e2dee000b042303114905ed08d191cf4d7d556852a",
+      "tests/__init__.py": "f616d290cd611f4e6b38794a131af9521ed1e8c37e1c956cf4d1e32c76fccca1",
+      "tests/test_http.py": "c07efe88d51ee3999c4bc27ee0ebba34f1889b42abda9681f30c0c17bf138517",
+      "tests/test_service.py": "b0007d3054c638cbeecfa174afa9bdbf00ac3ed409b0eef390a583b4e0d83334"
+    }
+  },
+  "elapsed_seconds": 9.199,
+  "tests_run": 46,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expected_failures": 0,
+  "unexpected_successes": 0,
+  "success": true
+}

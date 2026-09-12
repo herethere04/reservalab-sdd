@@ -1,0 +1,31 @@
+name: Test Harness
+on:
+  push:
+    branches: [develop, 'feature/**']
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  harness:
+    name: harness
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build standardized environment
+        run: docker build -t reservalab:test .
+      - name: Run harness inside container
+        run: |
+          mkdir -p evidence/ci
+          chmod 777 evidence/ci
+          docker run --rm -v "$PWD/evidence/ci:/app/evidence/ci" reservalab:test python scripts/run_tests.py --output-dir /app/evidence/ci
+      - name: Publish execution logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-${{ github.run_id }}
+          path: evidence/ci/
+          if-no-files-found: error
+          retention-days: 30

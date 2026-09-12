@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-09-09T16:35:58.737410Z",
+  "python": "3.12.14",
+  "python_implementation": "CPython",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "git": {
+    "head": null,
+    "working_tree_dirty": null,
+    "repository_at_project_root": false
+  },
+  "source_snapshot": {
+    "algorithm": "sha256",
+    "manifest_sha256": "be4777520fd0a01952ff573d13c90d34b94d8164944866cdfd386776b366c8eb",
+    "file_count": 15,
+    "files": {
+      ".github/workflows/tests.yml": "a2117dc95437f9e5abae28d0c2ad1bfd511c1b39a30241c209f54ea320c0cb08",
+      "Dockerfile": "ef691158cfa774c38f5a5df727ddce5e283dfe125b3c617ac0543ddcd022ad07",
+      "compose.yaml": "d050dd2bce5f3b387a9d4281c627d740740901d982fca0bdb784c46b995f5ee8",
+      "reservalab/__init__.py": "5abd69f7aad177cbbcf3ef8e17c17763178ae7a57e0403aa3f2a85636d6e7089",
+      "reservalab/__main__.py": "f5fe804111bf4d69f85c2a4b2d09e74408f796cdd90893e0ad36315b259b3d9a",
+      "reservalab/domain.py": "11d030d8ada130f8e97265a34794aeb3885854e8525fc8be935cb994ac3de8f3",
+      "reservalab/repository.py": "56c4f82840eb26e6f17d8a47a541e80660ca155ea2f05c817b2354799fe025a7",
+      "reservalab/server.py": "cd0baa6ddc47bfb79472f69d7ec907a5d86c99c71a8c77a54a1dd3432ff8506e",
+      "reservalab/service.py": "bb4832a580bc77a76b6f1c2675c614757b5a6df0e13b8ca8dab4b4ee7549f13e",
+      "scripts/run_tests.py": "33e3a08843366dbb4ffd3540dafa082c6ba5433022fbce9391924f872d892cb0",
+      "scripts/test.ps1": "a3f8064d7b7896ecb58eeb19d4c584cd5f8e6594bbf99fefc48cf1cbcc002bf3",
+      "scripts/test.sh": "da00666f3843fe3536db77e2dee000b042303114905ed08d191cf4d7d556852a",
+      "tests/__init__.py": "f616d290cd611f4e6b38794a131af9521ed1e8c37e1c956cf4d1e32c76fccca1",
+      "tests/test_http.py": "c07efe88d51ee3999c4bc27ee0ebba34f1889b42abda9681f30c0c17bf138517",
+      "tests/test_service.py": "b0007d3054c638cbeecfa174afa9bdbf00ac3ed409b0eef390a583b4e0d83334"
+    }
+  },
+  "elapsed_seconds": 9.199,
+  "tests_run": 46,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expected_failures": 0,
+  "unexpected_successes": 0,
+  "success": true
+}
