@@ -15,3 +15,15 @@ Uma execução anterior revelou uma mensagem tardia e inofensiva ao finalizar o 
 ## Governança
 
 As proteções de main e develop foram consultadas pela API em 2026-09-09: uma aprovação obrigatória, check harness obrigatório e restrições aplicadas ao administrador. Revisões humanas e merges permanecem pendentes.
+
+## Execução local padronizada via Docker (Issue E1-04)
+
+Em 2026-09-12, a execução do *harness* via Docker Compose (`docker compose run --build --rm tests`) foi reproduzida com sucesso no ambiente local. 
+
+**Resumo da evidência real:**
+* **Ambiente:** Linux (WSL2) com Python 3.13.7 (CPython)
+* **Testes:** 46 executados, 0 falhas, 0 erros (`success: true`)
+* **Duração:** 8.314 segundos
+* **Manifesto SHA-256 (12 arquivos):** `113e9c49a93b214fe3167f4240bb5dac1a6795ff2b89bc3b639d822729cf2832`
+
+A execução confirmou que a infraestrutura em contêiner atende aos requisitos de isolamento e padronização da entrega.
