@@ -1,6 +1,6 @@
 # Especificação técnica — ReservaLab
 
-Versão: 1.0 · Entrega 1 · Estado: contrato para implementação e revisão humana.
+Versão do contrato: 1.0 · Consolidação: Entrega 2, 14/10/2026. Os contratos funcionais da Entrega 1 são preservados; novas evidências e revisão documental estão vinculadas à Issue #14.
 
 ## 1. Problema e objetivo
 
@@ -176,6 +176,12 @@ A tabela define os cenários mínimos a conferir na suíte e os requisitos que j
 | CT-14 | HTTP real: status, JSON, mídia inválida, excesso de corpo, método e rota inválidos. | RF-07, RNF-05, RNF-06 |
 | CT-15 | Harness termina com falha quando um teste falha e CI publica resultado verificável. | RNF-07 |
 
-## 9. Critério de conclusão da Entrega 1
+## 9. Critério de conclusão da entrega
 
 Repositório acessível ao professor, branches e PR de entrega publicados, ambiente e harness executáveis, documentação consistente e evidências reais disponíveis. A participação humana exige que cada integrante execute sua tarefa, deixe revisão/comentário autêntico e realize a submissão no Moodle. Esses atos não podem ser substituídos por texto gerado ou atribuídos ao grupo antes de acontecerem.
+
+## 10. Validação consolidada da Entrega 2
+
+CT-15 é exercitado por `tests/test_harness.py`, que executa o script real em projetos temporários: sucesso com saída 0, falha de asserção com saída 1, exceção com saída 1 e suíte vazia com saída 1. Em todos os casos, conferir `tests.log` e `summary.json`. As falhas são fixtures deliberadas e isoladas; não representam defeitos escondidos na suíte principal.
+
+O fechamento da Entrega 2 também exige relatório ético-técnico, README com diagrama, consolidação dos ADRs e evidências reais de governança. A checklist está em `docs/DELIVERY_CHECKLIST.md`; a publicação da proposta não substitui a revisão humana e a promoção aprovada para `main`.

@@ -28,7 +28,7 @@ class HttpIntegrationTests(unittest.TestCase):
         self.thread.join(timeout=5)
 
     def payload(self, **changes):
-        payload = {"room_id": 1, "student_name": "Gabriel Ferreira Costa",
+        payload = {"room_id": 1, "student_name": "Estudante Exemplo",
                    "starts_at": "2030-01-01T10:00:00Z", "ends_at": "2030-01-01T11:00:00Z",
                    "participants": 2}
         payload.update(changes)

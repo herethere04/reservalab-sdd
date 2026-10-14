@@ -76,7 +76,7 @@ Novos registros devem indicar o caso observado, resultado anterior, decisão, re
 **Revisor humano:** Gabriel Ferreira Costa
 
 ```text
-ID: RFN-010
+ID: RFN-NOVO
 Autor e origem: <integrante ou agente; revisão/teste específico>
 Requisito afetado: <RF/RN/RNF>
 Problema observado: <entrada, saída e expectativa>
@@ -84,3 +84,24 @@ Decisão: <ajuste do contrato, correção da implementação ou manutenção jus
 Evidência: <link do PR/Issue e teste/log>
 Revisor humano: <nome e link; ou pendente>
 ```
+
+
+## Consolidação da Entrega 2 - Issue #14 (14/10/2026)
+
+### RFN-014 - Evidência observável do próprio harness
+
+**Origem:** inspeção assistida pelo Codex. **Requisitos:** RNF-03, RNF-07, CT-15. A SPEC já exigia saída diferente de zero em falhas, mas a suíte de 46 testes não exercitava o harness como processo nem comprovava a rejeição de suíte vazia. A SPEC foi detalhada antes dos novos testes. Foram acrescentadas quatro verificações isoladas em `tests/test_harness.py`, preservando a implementação que já atendia ao contrato. Não se afirma que o harness anterior retornava sucesso indevido: a lacuna era de comprovação automatizada.
+
+### RFN-015 - Dados fictícios nos cenários
+
+**Origem:** inspeção dos fixtures pelo Codex. **Requisito:** RNF-03 e restrição de dados fictícios do AGENTS.md. Os nomes completos de dois integrantes apareciam em `tests/test_http.py` e `tests/test_service.py`. Foram substituídos por `Estudante Exemplo`, incluindo a asserção de normalização de espaços. Os nomes/RAs da equipe permanecem na identificação acadêmica, conforme a Entrega 1; nenhuma regra de validação foi relaxada.
+
+### RFN-016 - Estado real da governança e precisão técnica
+
+**Origem:** consulta direta de PRs, revisões e Issues pelo conector GitHub. **Requisito:** RNF-08, ADR-006. Os guias ainda descreviam o PR inicial como pendente, embora #9, #10 e #12 estivessem integrados. O PR #11 teve base `main`, uma exceção ao fluxo planejado `feature/* -> develop -> main`; #13 continuava aberto apesar de uma aprovação registrada. A documentação passa a distinguir plano, histórico e fechamento da nova entrega. Não houve reescrita do histórico nem simulação de revisão.
+
+A descrição antiga de concorrência em `REFINEMENTS.md` na raiz falava em bloquear a tabela. A correção documental explicita que `BEGIN IMMEDIATE` inicia uma transação de escrita e serializa escritores; não é um bloqueio por tabela. O código já usa a mesma transação para a consulta e a inserção.
+
+### Execução e falhas do ambiente
+
+A execução inicial no ambiente restrito resultou em 14 erros de abertura de sockets nos testes HTTP. O mesmo conjunto de 46 testes passou após permitir sockets locais; isso é uma restrição do ambiente, não uma correção de regra de negócio. O resumo rejeitado permanece em `evidence/entrega2-baseline/`, e a reprodução aprovada está em `evidence/entrega2-local-baseline/`. A validação final ampliada e suas contagens estão em `docs/EXECUTION.md`. Nenhuma falha foi suprimida ou convertida em skip.

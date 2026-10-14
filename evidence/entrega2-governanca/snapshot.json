@@ -1,0 +1,270 @@
+{
+  "consulted_at": "2026-10-14",
+  "repository": "herethere04/reservalab-sdd",
+  "branches": [
+    {
+      "branch": "bootstrap"
+    },
+    {
+      "branch": "develop"
+    },
+    {
+      "branch": "feature/entrega-inicial"
+    },
+    {
+      "branch": "feature/harness-evidencias"
+    },
+    {
+      "branch": "feature/revisao-especificacao"
+    },
+    {
+      "branch": "feature/validacao-reservas"
+    },
+    {
+      "branch": "main"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "title": "E1-01 · Áquila — Governança e integração",
+      "state": "closed",
+      "closed_at": "2026-09-11T11:45:32Z",
+      "comments": 0,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/1"
+    },
+    {
+      "number": 2,
+      "title": "E1-02 · Gabriel — Revisar especificação SDD",
+      "state": "closed",
+      "closed_at": "2026-09-11T11:45:33Z",
+      "comments": 0,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/2"
+    },
+    {
+      "number": 3,
+      "title": "E1-03 · Pedro — Validar regras e persistência",
+      "state": "closed",
+      "closed_at": "2026-09-12T21:09:16Z",
+      "comments": 1,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/3"
+    },
+    {
+      "number": 4,
+      "title": "E1-04 · Eduardo — Reproduzir ambiente e harness",
+      "state": "closed",
+      "closed_at": "2026-09-13T01:58:45Z",
+      "comments": 1,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/4"
+    },
+    {
+      "number": 5,
+      "title": "E1-05 · Áquila — Conferir configuração e uso de IA",
+      "state": "closed",
+      "closed_at": "2026-09-13T01:59:27Z",
+      "comments": 1,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/5"
+    },
+    {
+      "number": 6,
+      "title": "E1-06 · Gabriel — Consolidar feedback da equipe",
+      "state": "closed",
+      "closed_at": "2026-09-13T02:00:07Z",
+      "comments": 1,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/6"
+    },
+    {
+      "number": 7,
+      "title": "E1-07 · Eduardo — Conferir pipeline e evidências",
+      "state": "closed",
+      "closed_at": "2026-09-13T02:16:29Z",
+      "comments": 3,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/7"
+    },
+    {
+      "number": 8,
+      "title": "E1-08 · Áquila — Finalizar revisão e PDF da entrega",
+      "state": "closed",
+      "closed_at": "2026-09-13T02:26:45Z",
+      "comments": 1,
+      "url": "https://github.com/herethere04/reservalab-sdd/issues/8"
+    }
+  ],
+  "pull_requests": [
+    {
+      "number": 9,
+      "title": "Entrega 1: SDD, API de reservas e test harness",
+      "author": "herethere04",
+      "base": "develop",
+      "head": "feature/entrega-inicial",
+      "head_sha": "4c7dc0816f12eb844524da1cd5c3b86266fc7476",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-10T18:05:53Z",
+      "url": "https://github.com/herethere04/reservalab-sdd/pull/9",
+      "reviews": [
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABNDGfIw",
+          "state": "APPROVED",
+          "body": "Revisão da documentação base e do harness de testes concluída. O ambiente rodou localmente sem erros. Vou iniciar agora os testes práticos exigidos na minha issue e consolidar os exemplos reais no REFINEMENTS.md na minha própria branch, conforme as Issues E1-02 e E1-06.",
+          "submitted_at": "2026-09-10T18:04:09Z",
+          "author": {
+            "login": "g0bss",
+            "name": "g0bss",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178807040?u=892770deffbf84faafbbebeb5be1aaf53a7a74d0&v=4",
+            "id": null
+          }
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "docs: consolida validacoes reais da E1-02 por Gabriel",
+      "author": "g0bss",
+      "base": "develop",
+      "head": "feature/revisao-especificacao",
+      "head_sha": "07d7c8206f0794dc0253f0c93323e5409c48e08a",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-13T01:49:11Z",
+      "url": "https://github.com/herethere04/reservalab-sdd/pull/10",
+      "reviews": [
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABND_-Hg",
+          "state": "DISMISSED",
+          "body": "",
+          "submitted_at": "2026-09-10T19:47:37Z",
+          "author": {
+            "login": "Claneeer",
+            "name": "Claneeer",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178807715?v=4",
+            "id": null
+          }
+        },
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABNUliaQ",
+          "state": "APPROVED",
+          "body": "Revisei os refinamentos adicionados para campos extras, capacidade, fuso/duração, cancelamento e concorrência. Os registros indicam requisito, entrada, resultado observado e decisão, e os dois checks do harness estão aprovados. Aprovo a integração em develop.",
+          "submitted_at": "2026-09-13T01:48:57Z",
+          "author": {
+            "login": "herethere04",
+            "name": "herethere04",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178807135?u=df8f2e21096c7c4e277f162ba5f870591597b682&v=4",
+            "id": null
+          }
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Feature/validacao reservas",
+      "author": "Claneeer",
+      "base": "main",
+      "head": "feature/validacao-reservas",
+      "head_sha": "4105d69a967ab47b0ee8a18ac8422104b9263659",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-12T18:37:23Z",
+      "url": "https://github.com/herethere04/reservalab-sdd/pull/11",
+      "reviews": [
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABNTNTQA",
+          "state": "APPROVED",
+          "body": "Código revisado e aprovado.",
+          "submitted_at": "2026-09-12T18:32:27Z",
+          "author": {
+            "login": "eddyocn",
+            "name": "eddyocn",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178915145?u=c0ce085d5015039835ff389bea8556ba741b0474&v=4",
+            "id": null
+          }
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Reprodução do ambiente Docker e harness (E1-04)",
+      "author": "g0bss",
+      "base": "develop",
+      "head": "feature/harness-evidencias",
+      "head_sha": "edcef483cf9667fe119b7e1c75e4a95958006be5",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-13T02:05:22Z",
+      "url": "https://github.com/herethere04/reservalab-sdd/pull/12",
+      "reviews": [
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABNUmSRA",
+          "state": "DISMISSED",
+          "body": "Revisei as evidências local e remota. A documentação registra o comando Docker, Python 3.13.7, 46 testes, zero falhas e erros, além do link do GitHub Actions. Os checks do commit final estão aprovados. Aprovo a integração em develop.",
+          "submitted_at": "2026-09-13T01:53:23Z",
+          "author": {
+            "login": "herethere04",
+            "name": "herethere04",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178807135?u=df8f2e21096c7c4e277f162ba5f870591597b682&v=4",
+            "id": null
+          }
+        },
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABNUpCVA",
+          "state": "APPROVED",
+          "body": "Revisei o commit final: o README consolida visão geral, equipe, execução, ADRs, governança e matriz de atendimento; as evidências registram 46 testes sem falhas e o GitHub Actions. Os dois checks passaram. Aprovo a integração em develop.",
+          "submitted_at": "2026-09-13T02:04:59Z",
+          "author": {
+            "login": "herethere04",
+            "name": "herethere04",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178807135?u=df8f2e21096c7c4e277f162ba5f870591597b682&v=4",
+            "id": null
+          }
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Entrega 1: promove evidências e documentação final para main",
+      "author": "herethere04",
+      "base": "main",
+      "head": "develop",
+      "head_sha": "bffa8f1c0ce0a5ecf11007598cf0e133d40e7dd6",
+      "state": "open",
+      "merged": false,
+      "merged_at": null,
+      "url": "https://github.com/herethere04/reservalab-sdd/pull/13",
+      "reviews": [
+        {
+          "id": "PRR_kwDOUTz1Z88AAAABNUrf3A",
+          "state": "APPROVED",
+          "body": "Revisado e aprovado",
+          "submitted_at": "2026-09-13T02:20:41Z",
+          "author": {
+            "login": "eddyocn",
+            "name": "eddyocn",
+            "email": null,
+            "avatar_url": "https://avatars.githubusercontent.com/u/178915145?u=c0ce085d5015039835ff389bea8556ba741b0474&v=4",
+            "id": null
+          }
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "workflow_runs": [
+      {
+        "id": 34731777935,
+        "name": "Test Harness",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 24,
+        "jobs_url": "https://api.github.com/repos/herethere04/reservalab-sdd/actions/runs/34731777935/jobs",
+        "logs_url": "https://api.github.com/repos/herethere04/reservalab-sdd/actions/runs/34731777935/logs",
+        "workflow_id": 354229155
+      }
+    ]
+  }
+}
