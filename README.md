@@ -125,13 +125,19 @@ O Codex apoiou especificação, código, testes e revisão na preparação inici
 | Item da Entrega 2 | Evidência |
 | --- | --- |
 | Solução publicada e governança | Código, Issues/PRs e [auditoria](docs/GOVERNANCE.md) |
-| Testes e casos de borda | 50 testes, logs e resumo atual |
+| Testes e casos de borda | 50/50 aprovados (100% de passagem), logs e resumo atual |
 | Erros, correções e re-especificação | SPEC e REFINEMENTS |
 | README, fluxo e defesa | Este arquivo, diagrama e ADRs |
-| Relato técnico da experiência | Seção 9 do relatório, baseada no histórico |
-| Análise crítica de IA | Seções 7 e 8 do relatório |
+| Relato técnico da experiência | Seção 10 do relatório, baseada no histórico |
+| Comparação entre ferramentas de IA | Seção 7: Codex CLI, Claude Code, Cursor e Antigravity; só Codex teve uso efetivo |
+| Cinco itens de submissão | Seção 11 do relatório e checklist |
+| Análise crítica de IA | Seções 8 e 9 do relatório |
 | Documento acadêmico | [PDF da Entrega 2](output/pdf/ReservaLab_Entrega_2.pdf) |
 | Revisão e integração final | Pendentes de revisão do novo PR e promoção aprovada |
+
+O [complemento de escopo RFN-017](docs/ENTREGA_2_REFINEMENT.md) registra o ajuste pelo enunciado completo.
+
+A comparação usa documentação oficial; não atribui uso ou resultados experimentais às ferramentas não utilizadas.
 
 Antes de submeter, concluir [DELIVERY_CHECKLIST.md](docs/DELIVERY_CHECKLIST.md). Cada integrante confere e envia o documento conforme a orientação da disciplina.
 

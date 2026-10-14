@@ -2,9 +2,9 @@
 ## Publicação do projeto, refinamento e análise crítica do uso de IA
 
 Bootcamp III - Turma B - 0726 - Campus Virtual - 2026/2.
-Documento preparado em 14/10/2026. Prazo informado no enunciado: 17/10/2026, às 23h55.
+Documento revisado em 14/10/2026 após recebimento do escopo completo da atividade. Prazo informado no enunciado: 17/10/2026, às 23h55.
 Repositório público: [herethere04/reservalab-sdd](https://github.com/herethere04/reservalab-sdd).
-Proposta da Entrega 2: branch `feature/entrega-2`, baseada em `develop`; [Issue #14](https://github.com/herethere04/reservalab-sdd/issues/14).
+Proposta da Entrega 2: branch `feature/entrega-2`, baseada em `develop`; [Issue #14](https://github.com/herethere04/reservalab-sdd/issues/14) e [PR #15](https://github.com/herethere04/reservalab-sdd/pull/15).
 
 | Integrante | RA | Área de responsabilidade |
 | --- | --- | --- |
@@ -73,6 +73,8 @@ O controle de qualidade combina contrato, testes e revisão humana. Nenhum desse
 
 ## 4. Testes automatizados e evidências reais
 
+100% de passagem significa 50 testes aprovados de 50 executados, sem falhas, erros ou testes ignorados na execução final. Esse resultado não significa 100% de cobertura de código nem prova ausência de defeitos.
+
 Em 14/10/2026, a suíte ampliada executou 50 testes em CPython 3.12.3 no Linux, com zero falhas, zero erros, zero ignorados e código de saída 0. O tempo registrado foi 7,750 segundos. O log e o resumo estão em evidence/entrega2-local/tests.log e summary.json.
 
 | Grupo | Quantidade | Comportamento verificado |
@@ -87,7 +89,7 @@ A primeira tentativa, em ambiente com sockets bloqueados, executou 46 testes e e
 
 Após Áquila iniciar o Docker Desktop, a imagem Python 3.13.7 foi construída e executou os mesmos 50 testes: zero falhas/erros/ignorados, saída 0 e 9,136 segundos. O Compose não pôde montar a pasta temporária porque ela não era compartilhada com o Desktop. A execução usou docker run sem bind mount; os logs internos foram recuperados por docker cp e estão em evidence/entrega2-docker. Os hashes dos 13 fontes presentes no contêiner coincidem com os do resumo local. O HEAD não está disponível na imagem porque .git não é copiado.
 
-O GitHub também confirmou success na execução histórica 34731777935 do PR #12, inclusive build, harness e publicação. Essa observação comprova o estado histórico consultado; o check da nova versão deve ser conferido no PR.
+O GitHub também confirmou success na execução histórica 34731777935 do PR #12, inclusive build, harness e publicação. Essa observação comprova o estado histórico consultado; O [CI do PR #15](https://github.com/herethere04/reservalab-sdd/actions/runs/38636863666), sobre o commit 0097365cb13e944a7bf67783bbb7ded4cf780035, também registrou Python 3.13.7, 50 testes, zero falhas/erros/ignorados e success: true. Essa execução pertence à primeira versão publicada; o novo commit documental deve ter seu próprio check conferido.
 
 A suíte exercita comportamentos e fronteiras definidos no contrato. Não foi medida cobertura percentual, carga, latência, recuperação de desastre ou resistência a ataques. Os artefatos históricos do Actions têm retenção de 30 dias; por isso esta entrega inclui logs versionados da execução nova.
 
@@ -130,7 +132,25 @@ A nova sprint está ligada à Issue #14 e à branch feature/entrega-2. Seu escop
 
 As proteções de branches foram documentadas em setembro; sua configuração atual não foi reconsultada. Aprovações e checks anteriores pertencem aos commits que avaliaram. Uma alteração nova exige nova conferência. Não foram realizadas aprovações em nome de colegas ou merges na preparação da Entrega 2.
 
-## 7. Análise crítica: segurança e limites técnicos da IA
+## 7. Análise comparativa das ferramentas de IA
+
+A equipe utilizou somente o Codex desktop. Codex CLI, Claude Code, Cursor e Antigravity são avaliados documentalmente, com fontes oficiais consultadas em 14/10/2026. Não houve execução comparativa dessas alternativas. Os critérios são especificação, edição/execução, controle de ações, revisão e impacto verificável. A adequação indicada é uma análise das capacidades documentadas, não um resultado experimental.
+
+| Ferramenta e uso | Pontos fortes para SDD | Limitações e controles | Impacto no ReservaLab |
+| --- | --- | --- | --- |
+| Codex CLI - avaliação documental | Lê/edita código e executa comandos no terminal; instruções AGENTS.md e controle por sandbox/aprovações apoiam tarefas reproduzíveis. | Configuração de permissões determina o alcance. Instruções e execução de testes não garantem correção do contrato. | CLI não testado. A experiência prática abaixo corresponde ao Codex desktop. |
+| Claude Code - avaliação documental | Instruções CLAUDE.md e ferramentas de código permitem manter contexto; permissões e isolamento delimitam ações. | A documentação distingue instruções de contexto de mecanismos que efetivamente bloqueiam ações. Permissões precisam ser configuradas. | Não usado; qualidade de SPEC/código e produtividade não medidas. |
+| Cursor - avaliação documental | Integra edição, busca no projeto, comandos e regras ao ambiente de desenvolvimento, facilitando examinar alterações no fluxo de trabalho. | Modelo e contexto influenciam as respostas. Privacy Mode limita uso para treinamento, mas prompts/contexto ainda são enviados aos provedores. | Não usado; nenhuma comparação de defeitos ou tempo executada. |
+| Antigravity - avaliação documental | Produz planos, diffs e outros artefatos que apoiam a revisão de decisões e de execução do agente. | Políticas variam por plataforma. O modo Turbo documentado remove isolamento/restrições; artefatos não homologam o software por si. | Não usado; nenhum ganho funcional ou de qualidade demonstrado. |
+
+Fontes da matriz: [Codex CLI](https://learn.chatgpt.com/docs/codex/cli), [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md), [aprovações Codex](https://learn.chatgpt.com/docs/agent-approvals-security); [Claude: memória](https://code.claude.com/docs/en/memory) e [segurança](https://code.claude.com/docs/en/security); [Cursor Agent](https://cursor.com/docs/agent/overview) e [privacidade](https://cursor.com/help/security-and-privacy/privacy); [Antigravity: artefatos](https://www.antigravity.google/docs/artifacts/) e [permissões](https://antigravity.google/docs/agent-settings).
+
+O impacto efetivamente observado do Codex foi a preparação de requisitos/contratos rastreáveis, apoio às regressões RFN-006 a RFN-009 e, nesta etapa, quatro testes novos do harness, com 50/50 aprovados localmente e no Docker. Também houve correção documental do histórico de governança. Esses artefatos demonstram resultados da preparação assistida; não isolam a contribuição causal da IA em relação à revisão humana.
+
+Sem baseline sem IA ou medições comuns de tempo, custo e defeitos, não se estabelece ranking. O projeto mantém o fluxo reproduzido com Codex e revisão humana. Uma comparação experimental futura exigiria tarefas, critérios e ambientes equivalentes.
+
+
+## 8. Análise crítica: segurança e limites técnicos da IA
 
 A aplicação não executa um agente de IA em seu funcionamento. A superfície avaliada é o uso do Codex durante desenvolvimento e documentação, com acesso a arquivos e ao GitHub. A IA ajudou a estruturar contrato, gerar código/testes, revisar casos de borda e organizar evidências. O valor depende de validação observável, e não da confiança no texto gerado.
 
@@ -138,27 +158,31 @@ Alucinação e confiança excessiva são riscos concretos. Um agente pode citar 
 
 Prompt injection pode ocorrer quando arquivos, PDFs, Issues ou comentários contêm instruções que tentam desviar o agente. Segundo a OWASP, conteúdo externo pode modificar o comportamento de um modelo e provocar ações indevidas. No projeto, o enunciado foi tratado como fonte de requisitos da tarefa autorizada; não como autorização autônoma para enviar mensagens, obter segredos ou alterar permissões. A prevenção combina escopo, menor privilégio e revisão de ações com efeito externo.
 
+Uma sugestão insegura também pode apagar o banco, substituir arquivos de trabalho ou publicar uma alteração sem revisão. Não ocorreu um incidente destrutivo comprovado neste projeto. O controle é revisar o comando e o diff, usar dados descartáveis nos testes, preservar o histórico e limitar permissões. Uma afirmação confiante do agente não autoriza remover dados nem enfraquecer proteções.
+
 O acesso de escrita ao GitHub aumenta o impacto de um erro: alterações podem publicar dados, reescrever estado de trabalho ou criar um merge inadequado. Por isso a preparação usa cópia isolada, feature branch e PR. A revisão humana é necessária para integração, e as evidências não devem ser substituídas por uma declaração do próprio agente. Essas regras dependem também de permissões/configurações reais do repositório.
 
 Os testes e a IA não certificam segurança de produção. A API tem SQL parametrizado, validação de entrada e limite de 16 KiB, mas não oferece autenticação, autorização por dono da reserva, TLS próprio, limitação de requisições ou garantia contra clientes lentos. O servidor usa threads e não impõe um orçamento explícito de conexões. Esses são limites examinados no código, sem alegar exploração ou teste de carga.
 
 O SQLite protege a criação simultânea prevista pelo contrato; ainda assim, contenção prolongada ou falhas operacionais exigiriam tratamento e avaliação adicionais. Não se conclui ausência de vulnerabilidades apenas porque cinquenta testes passaram. Para uso institucional, seria necessário redefinir requisitos, selecionar infraestrutura apropriada e executar uma avaliação específica.
 
-## 8. Análise crítica: ética, responsabilidade e aprendizagem
+## 9. Análise crítica: ética, responsabilidade e aprendizagem
 
-A responsabilidade acadêmica e técnica permanece com os integrantes. O auxílio de IA é declarado no relatório, no fluxo SDD e na preparação do PR. A ferramenta não pode assumir identidade de um colega, produzir sua aprovação ou afirmar que ele executou um comando. Aceitar um artefato exige compreender suas regras e conseguir defendê-las.
+A responsabilidade acadêmica e técnica permanece com os integrantes. A homologação humana é obrigatória no fluxo SDD deste projeto: testes aprovados e análises entre agentes auxiliam a decisão, mas a aceitação precisa ser registrada por outro integrante no commit que será integrado. O auxílio de IA é declarado no relatório, no fluxo SDD e na preparação do PR. A ferramenta não pode assumir identidade de um colega, produzir sua aprovação ou afirmar que ele executou um comando. Aceitar um artefato exige compreender suas regras e conseguir defendê-las.
 
-A identificação real da equipe e seus RAs atende à entrega acadêmica solicitada. Já os exemplos de reserva e os testes usam dados fictícios, pois não precisam de nomes de alunos reais para verificar comportamento. A API armazena o nome informado sem uma política de retenção implementada; por isso a demonstração não deve coletar dados institucionais reais.
+A identificação real da equipe e seus RAs atende à entrega acadêmica solicitada. Essa autorização de publicação não implica autorização para enviar qualquer outro material aos modelos. Contexto, prompts e anexos podem conter segredos, documentos internos ou dados de terceiros; deve-se enviar somente o necessário à tarefa e conferir os controles de conta/provedor. Não foi auditada a configuração de retenção da conta, por isso não se promete confidencialidade absoluta. A [documentação do Cursor](https://cursor.com/help/security-and-privacy/privacy) ilustra a diferença entre impedir treinamento e impedir envio: o contexto ainda é encaminhado aos provedores mesmo com Privacy Mode.
+
+Os exemplos de reserva e os testes usam dados fictícios, pois não precisam de nomes de alunos reais para verificar comportamento. A API armazena o nome informado sem uma política de retenção implementada; por isso a demonstração não deve coletar dados institucionais reais.
+
+Propriedade intelectual e direitos autorais requerem separar autoria humana, licença e permissão de uso. A [Lei 9.610/1998, arts. 7 e 11](https://www.planalto.gov.br/ccivil_03/leis/l9610.htm) contempla programas de computador e define o autor como pessoa física criadora; a [Lei 9.609/1998, art. 2](https://www.planalto.gov.br/ccivil_03/leis/l9609.htm) dispõe sobre a proteção do software. Esses textos não certificam automaticamente a titularidade de cada saída de IA. A equipe deve verificar a origem de trechos reconhecíveis, licenças e atribuições antes de incorporá-los ou redistribuí-los; não deve declarar material gerado como livre de direitos apenas porque veio de um modelo.
 
 Código gerado pode reproduzir padrões sem justificar sua origem ou adequação. Não foi realizada auditoria de licenças de toda possível influência do modelo e não se declara originalidade absoluta por causa da ferramenta. O controle viável nesta entrega é manter referências técnicas, autoria identificada, commits rastreáveis e revisão dos trechos incorporados. Bibliotecas da aplicação são as da distribuição Python; isso não elimina a responsabilidade sobre o código final.
 
 Há risco de dependência e perda de aprendizagem quando o grupo aceita respostas sem compreender o raciocínio. A defesa técnica deve explicar por que os intervalos são semiabertos, por que UTC é necessário e por que consulta/inserção pertencem à mesma transação. A reprodução por colegas e a leitura dos testes transformam a saída da IA em material verificável de estudo.
 
-A aplicação não faz seleção ou classificação de pessoas. Portanto, não foram medidos vieses demográficos de decisão automatizada. Há questões de acesso: a falta de interface exige familiaridade com HTTP; a normalização por strip e o limite de 100 caracteres são escolhas funcionais que merecem revisão em um sistema institucional. Os testes de UTF-8 e limites não equivalem a avaliação completa de inclusão ou acessibilidade.
-
 Não foram medidos tempo economizado, custo da ferramenta, produtividade ou pegada ambiental. Sem comparação controlada, seria inadequado apresentar números de benefício. A conclusão sustentada é mais limitada: a IA produziu artefatos úteis e ajudou a identificar/reforçar critérios, mas requereu validação de código, documentação e histórico.
 
-## 9. Relato técnico e fechamento
+## 10. Relato técnico e fechamento
 
 O histórico mostra que o trabalho em grupo exigiu alinhar especificação, exemplos manuais, testes e documentação. Gabriel registrou validações de contrato; Pedro vinculou a conferência de regras/concorrência; Eduardo registrou evidência remota e aprovação; Áquila coordenou PRs e consolidação. Essas informações decorrem de registros do repositório e não de depoimentos pessoais recolhidos para este texto.
 
@@ -168,11 +192,43 @@ A Entrega 2 ampliou a validação de 46 para 50 testes e corrigiu inconsistênci
 
 Antes da submissão, o grupo deve obter revisão real do novo PR, confirmar o check do commit final, concluir a integração em develop e a promoção aprovada para main. Deve também reconciliar #13 com a promoção final e revisar o PDF se o conteúdo mudar. A submissão acadêmica é realizada pelos integrantes no ambiente da disciplina.
 
+Após a homologação, o líder e todos os demais membros devem enviar o mesmo PDF consolidado pela Sala Online, conforme o enunciado completo. A submissão por uma pessoa não substitui a dos demais.
+
 A solução atende ao escopo funcional inicial e tem evidências locais e Docker atuais. A análise crítica explicita limites de segurança, autonomia, autoria e governança. O estado de revisão da nova proposta permanece distinto da implementação já existente e das aprovações históricas.
 
-## 10. Referências e navegação das evidências
+## 11. Conferência dos cinco itens de submissão
+
+O enunciado completo determina um único PDF consolidado enviado pelo líder e por todos os demais integrantes pela Sala Online. O mesmo documento reúne os cinco itens abaixo.
+
+| Item exigido | Conteúdo neste PDF | Situação |
+| --- | --- | --- |
+| 1. Repositório público atualizado | URL clicável na capa; arquitetura e execução nas seções 1 a 3; proposta no PR #15. | Publicado em feature/entrega-2; integração final ainda depende da equipe. |
+| 2. Nome completo e RA | Quatro integrantes identificados na capa e na fonte editável. | Presente, com dados reais autorizados. |
+| 3. Relatório de testes com 100% de passagem | Seção 4: 50/50 passaram, zero falhas/erros/ignorados; logs locais/Docker e link do CI. | Comprovado nas execuções identificadas; não é cobertura percentual de código. |
+| 4. Comparação e análise ético-técnica | Seção 7: matriz de quatro ferramentas; seções 8 e 9: alucinação/destruição, privacidade, IP e homologação humana. | Presente; uso efetivo do Codex separado da avaliação documental das alternativas. |
+| 5. Links de PRs com revisão em equipe | Seção 6 e referências: PRs #9 a #13 e a nova proposta #15. | Revisões históricas comprovadas; a revisão do novo PR continua pendente. |
+
+Proposta atual: [PR #15 - Entrega 2](https://github.com/herethere04/reservalab-sdd/pull/15). Evidência remota da primeira versão do PR: [Actions 38636863666](https://github.com/herethere04/reservalab-sdd/actions/runs/38636863666). Novos commits documentais exigem conferir seu próprio check antes do merge.
+
+A publicação da proposta já permite conferir o código, o README, o relatório e as evidências. A entrega não é declarada integralmente homologada: o grupo deve revisar o commit final, integrar em develop, promover para main por PR revisado e concluir a submissão de todos. Se a revisão mudar o conteúdo, o PDF deve ser atualizado. Essa pendência não pode ser eliminada por uma aprovação da IA.
+
+
+## 12. Referências e navegação das evidências
 
 - [Repositório público](https://github.com/herethere04/reservalab-sdd).
+- [PR #15 - proposta atual da Entrega 2](https://github.com/herethere04/reservalab-sdd/pull/15).
+- [CI da primeira versão do PR #15](https://github.com/herethere04/reservalab-sdd/actions/runs/38636863666).
+- [Codex CLI](https://learn.chatgpt.com/docs/codex/cli).
+- [Codex - instruções AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
+- [Codex - aprovações e segurança](https://learn.chatgpt.com/docs/agent-approvals-security).
+- [Claude Code - memória](https://code.claude.com/docs/en/memory).
+- [Claude Code - segurança](https://code.claude.com/docs/en/security).
+- [Cursor Agent](https://cursor.com/docs/agent/overview).
+- [Cursor - privacidade](https://cursor.com/help/security-and-privacy/privacy).
+- [Antigravity - artefatos](https://www.antigravity.google/docs/artifacts/).
+- [Antigravity - permissões](https://antigravity.google/docs/agent-settings).
+- [Lei 9.610/1998 - direitos autorais](https://www.planalto.gov.br/ccivil_03/leis/l9610.htm).
+- [Lei 9.609/1998 - software](https://www.planalto.gov.br/ccivil_03/leis/l9609.htm).
 - [Issue da Entrega 2](https://github.com/herethere04/reservalab-sdd/issues/14).
 - [PR #9 - implementação inicial](https://github.com/herethere04/reservalab-sdd/pull/9).
 - [PR #10 - validações do contrato](https://github.com/herethere04/reservalab-sdd/pull/10).
@@ -185,5 +241,5 @@ A solução atende ao escopo funcional inicial e tem evidências locais e Docker
 - [GitHub - branches protegidas](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches).
 - [OWASP - prompt injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/).
 
-Referências consultadas em 14/10/2026. Fontes acadêmicas: enunciado da Entrega 2 fornecido pelo usuário e PDF ReservaLab - Entrega 1. Documentação interna: SPEC, ARCHITECTURE, REFINEMENTS, AI_WORKFLOW, EXECUTION e GOVERNANCE. Os links do repositório permitem conferir os artefatos; os logs locais da Entrega 2 estão versionados junto à proposta.
+Referências consultadas em 14/10/2026. Fontes acadêmicas: enunciado completo da Entrega 2 fornecido pelo usuário nesta revisão e PDF ReservaLab - Entrega 1. Documentação interna: SPEC, ARCHITECTURE, REFINEMENTS, AI_WORKFLOW, EXECUTION e GOVERNANCE. Os links do repositório permitem conferir os artefatos; os logs locais da Entrega 2 estão versionados junto à proposta.
 

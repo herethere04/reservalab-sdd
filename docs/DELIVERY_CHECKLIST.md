@@ -10,13 +10,15 @@ Issue #14. Preparação assistida pelo Codex; revisão e integração dependem d
 - [x] Erros antigos, validações humanas e refinamentos novos distinguidos.
 - [x] Histórico real de PRs/revisões, Issues fechadas e exceção do PR #11 registrados.
 - [x] README com instalação, execução, fluxo e decisões.
-- [x] Relatório com defesa técnica, relato do histórico e análise crítica da IA.
-- [x] PDF de 11 páginas gerado, renderizado e conferido; atualizar se houver alterações de revisão.
+- [x] Relatório com defesa técnica, relato do histórico e os quatro pilares éticos exigidos.
+- [x] Matriz documental das quatro ferramentas, com fontes oficiais e impacto observado separado do uso não realizado.
+- [x] PDF mapeia os cinco itens de submissão; passagem final de 50/50 (100%), sem alegar cobertura de código.
+- [x] PDF consolidado de 13 páginas atualizado pelo escopo completo, renderizado e conferido; atualizar após eventuais alterações de revisão.
 - [ ] Outro integrante revisou o novo PR com a própria conta.
 - [ ] Check harness do commit final aprovado.
 - [ ] Integrar feature/entrega-2 em develop após aprovação.
 - [ ] Conferir #13 e concluir promoção revisada para main.
-- [ ] Submeter na plataforma acadêmica conforme orientação da disciplina.
+- [ ] Líder e todos os demais integrantes enviam o mesmo PDF consolidado pela Sala Online.
 
 Resultados de Docker e CI devem ser conferidos em [EXECUTION.md](EXECUTION.md), sem reutilizar um resultado histórico como se pertencesse à nova suíte.
 
