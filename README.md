@@ -1,36 +1,40 @@
 # ReservaLab
 
-API acadêmica para reservar salas de estudo, impedir conflitos de horário e cancelar reservas. A Entrega 1 foi estruturada com especificação técnica, desenvolvimento orientado pela especificação (SDD), ambiente reproduzível e harness de testes automatizados.
+API local de reserva de salas: consulta catálogo, cria e lista reservas, impede sobreposição e cancela preservando o registro. Projeto acadêmico com Python, SQLite, biblioteca padrão, unittest e fluxo SDD.
 
-**Repositório público:** <https://github.com/herethere04/reservalab-sdd>
+**Repositório:** [herethere04/reservalab-sdd](https://github.com/herethere04/reservalab-sdd).
+**Entrega 2:** [relatório](docs/ENTREGA_2.md), [PDF](output/pdf/ReservaLab_Entrega_2.pdf) e [Issue #14](https://github.com/herethere04/reservalab-sdd/issues/14).
+**Estado:** proposta em `feature/entrega-2`, baseada em `develop`, sujeita a revisão humana. A aplicação funcional já existe em `main`; #9, #10 e #12 foram integrados em `develop`. A promoção #13 está aberta na consulta de 14/10/2026.
 
-## Equipe e contribuições registradas
+## Equipe
 
-| Integrante | RA | Atividade registrada |
+| Integrante | RA | Área |
 | --- | --- | --- |
-| Áquila de Brito Barbosa | 22453948 | Governança, implementação inicial, configuração do fluxo de IA, revisão final e PDF. |
-| Gabriel Ferreira Costa | 22450586 | Validação da especificação e dos contratos, com exemplos práticos; reprodução local do ambiente Docker. |
-| Pedro Ivo Gonçalves Pinheiro Coelho | 22453629 | Validação das regras e persistência, abertura do PR de integração #11 e conferência do pipeline. |
-| Eduardo Cabral Nunes | 22454089 | Refinamento de concorrência; conferência remota do harness e do artefato do GitHub Actions. |
+| Áquila de Brito Barbosa | 22453948 | Integração, governança e entrega |
+| Gabriel Ferreira Costa | 22450586 | Especificação e contratos |
+| Pedro Ivo Gonçalves Pinheiro Coelho | 22453629 | Regras e persistência |
+| Eduardo Cabral Nunes | 22454089 | Ambiente, harness e evidências |
 
-O escopo e a divisão da sprint estão nas [Issues](https://github.com/herethere04/reservalab-sdd/issues), em [SPRINT.md](docs/SPRINT.md) e em [TEAM.md](docs/TEAM.md). O histórico de revisão e aprovação está nos Pull Requests [#9](https://github.com/herethere04/reservalab-sdd/pull/9), [#10](https://github.com/herethere04/reservalab-sdd/pull/10), [#11](https://github.com/herethere04/reservalab-sdd/pull/11) e [#12](https://github.com/herethere04/reservalab-sdd/pull/12).
+As contribuições verificadas e seus limites estão em [GOVERNANCE.md](docs/GOVERNANCE.md). Os nomes/RAs identificam a equipe real; os fixtures usam dados fictícios.
 
-## Instalação e execução
+## Instalação e execução local
 
-Requisitos: Git e Python 3.12 ou superior. O projeto usa somente a biblioteca padrão do Python e SQLite.
+Requisitos: Git e Python **3.12 ou superior**. Não é necessário instalar pacote Python externo, banco separado ou runtime de IA.
 
 ```sh
 git clone https://github.com/herethere04/reservalab-sdd.git
 cd reservalab-sdd
-python scripts/run_tests.py --output-dir evidence/latest
-python -m reservalab --host 127.0.0.1 --port 8000 --db data/reservalab.db
+git switch feature/entrega-2
+python3 --version
+python3 scripts/run_tests.py --output-dir evidence/latest
+python3 -m reservalab --host 127.0.0.1 --port 8000 --db data/reservalab.db
 ```
 
-A API responde em `http://127.0.0.1:8000`. Os endpoints principais são `GET /health`, `GET /rooms`, `GET /bookings`, `POST /bookings` e `DELETE /bookings/{id}`.
+A branch acima contém a proposta da entrega; após a promoção aprovada, selecionar `main`. Se o executável se chama `python`, substituir `python3`; no Windows, `py -3` também pode ser usado. Encerre a API com Ctrl+C. O banco é criado automaticamente. Consulte [health](http://127.0.0.1:8000/health) ou [rooms](http://127.0.0.1:8000/rooms) para receber JSON.
 
-## Ambiente padronizado
+## Ambiente padronizado com Docker
 
-O `Dockerfile` fixa Python 3.13.7 e `compose.yaml` fornece serviços separados para a API e para os testes.
+Inicie Docker Desktop/Engine com contêineres Linux e Docker Compose. A imagem fixa **Python 3.13.7** e executa a API com usuário sem privilégios.
 
 ```sh
 docker compose run --build --rm tests
@@ -39,56 +43,102 @@ docker compose logs api
 docker compose down
 ```
 
-O primeiro comando executa o harness e grava `evidence/latest/tests.log` e `evidence/latest/summary.json`.
+Os testes gravam `evidence/latest/tests.log` e `summary.json`. A API fica em `127.0.0.1:8000`; o volume do banco é preservado por `docker compose down`. O download inicial da imagem exige internet; os cenários de teste usam apenas recursos locais.
 
-## Especificação SDD
+Em Linux, se o UID 10001 do contêiner não puder gravar no diretório de evidências do anfitrião, execute somente o serviço de testes com seu UID/GID:
 
-- [SPEC.md](docs/SPEC.md): problema, requisitos funcionais e não funcionais, regras de negócio, contratos de entrada e saída e critérios de aceite.
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md): componentes isolados, APIs e decisões arquiteturais.
-- [REFINEMENTS.md](docs/REFINEMENTS.md): ajustes motivados por testes, revisões e validações práticas.
-- [AI_WORKFLOW.md](docs/AI_WORKFLOW.md) e [AGENTS.md](AGENTS.md): ferramenta de IA, contexto, regras e ciclo requisito → teste → código → evidência.
+```sh
+docker compose run --build --rm --user "$(id -u):$(id -g)" tests
+```
+
+No CI, o diretório de evidências é preparado antes da execução. Não é necessário executar a API como root nem alterar permissões de todo o projeto.
+
+## Contrato e exemplo
+
+| Método e rota | Resultado |
+| --- | --- |
+| GET /health | 200, status operacional |
+| GET /rooms | 200, duas salas, capacidades 4 e 8 |
+| POST /bookings | 201, reserva ativa; 409, conflito |
+| GET /bookings | 200, reservas ativas e canceladas |
+| DELETE /bookings/{id} | 200, cancelamento idempotente; 404, inexistente |
+
+Corpo de POST /bookings com Content-Type application/json:
+
+```json
+{"room_id":1,"student_name":"Estudante Exemplo","starts_at":"2099-10-10T14:00:00-03:00","ends_at":"2099-10-10T15:00:00-03:00","participants":3}
+```
+
+Datas com fuso explícito e minutos inteiros; resposta em UTC com Z. Duração de 30 a 120 minutos, início não passado e capacidade respeitada. Apenas reservas ativas da mesma sala bloqueiam horários; adjacência é permitida. Campos ausentes/extras e booleanos como inteiros são recusados. Contrato de erros e regras completas em [SPEC.md](docs/SPEC.md).
 
 ## Arquitetura e decisões
 
-Fluxo principal: `HTTP → serviço → validação/repositório SQLite`. O domínio não depende do adaptador HTTP, e a verificação de conflitos e a gravação usam a mesma transação.
-
-| ADR | Decisão | Motivo |
-| --- | --- | --- |
-| 001 | Python e biblioteca padrão | Ambiente simples e sem dependências externas. |
-| 002 | SQLite com `BEGIN IMMEDIATE` | Persistência local e proteção contra dupla reserva concorrente. |
-| 003 | UTC e intervalos `[início,fim)` | Comparações previsíveis e reservas adjacentes permitidas. |
-| 004 | Cancelamento lógico idempotente | Preservar o histórico e aceitar repetição segura. |
-| 005 | Relógio injetável e banco temporário | Testes determinísticos e isolados. |
-| 006 | PR revisado e evidência real | Rastreabilidade das decisões e colaboração da equipe. |
-
-## Test harness e evidências
-
-```sh
-python scripts/run_tests.py --output-dir evidence/latest
+```mermaid
+flowchart LR
+    C[Cliente HTTP] --> H[Adaptador HTTP]
+    H --> S[Serviço de reservas]
+    S --> V[Validação e relógio]
+    S --> R[Repositório SQLite]
+    R --> B[(Arquivo SQLite)]
+    T[Harness unittest] --> H
+    T --> S
+    T --> R
 ```
 
-O harness usa `unittest`, bancos temporários, relógio fixo e servidor HTTP real em porta dinâmica. A suíte tem **46 testes** para fluxo principal e casos de borda: capacidade, duração, datas, fusos, adjacência, concorrência, persistência, cancelamento, JSON inválido, mídia inadequada e limite de corpo.
+O domínio é independente de HTTP. Consulta de conflito e inserção usam a mesma transação `BEGIN IMMEDIATE`, com conexão por operação e datas UTC.
 
-Resultado verificado: **46 testes executados, 0 falhas, 0 erros e `success: true`**. O [Test Harness #19](https://github.com/herethere04/reservalab-sdd/actions/runs/34722723488) também concluiu com sucesso no GitHub Actions. Os detalhes estão em [EXECUTION.md](docs/EXECUTION.md) e em [EVIDENCIA_REMOTA_E1-07.md](docs/EVIDENCIA_REMOTA_E1-07.md).
-
-## Governança
-
-O repositório usa `main`, `develop` e branches `feature/*`. `main` e `develop` são protegidas e exigem Pull Request, aprovação de outro integrante, check `harness` aprovado e conversas resolvidas. As contribuições da entrega foram registradas em Issues e PRs, sem commits de implementação feitos diretamente na branch principal.
-
-## Atendimento à Entrega 1
-
-| Requisito | Evidência | Situação |
+| ADR | Decisão | Justificativa e limite |
 | --- | --- | --- |
-| Repositório, branches e proteção da principal | Histórico Git, regras de branch e PRs | Atendido |
-| Divisão de tarefas | Issues, `SPRINT.md` e `TEAM.md` | Atendido |
-| Revisões, comentários e aprovações | PRs #9, #10, #11 e #12 | Atendido |
-| README técnico e ADRs | Este arquivo e `ARCHITECTURE.md` | Atendido |
-| Especificação, regras e contratos | `SPEC.md` | Atendido |
-| Componentes e APIs testáveis | `ARCHITECTURE.md` e seção 7 de `SPEC.md` | Atendido |
-| Refinamentos por feedback e testes | `REFINEMENTS.md` | Atendido |
-| Configuração e uso de IA | `AGENTS.md` e `AI_WORKFLOW.md` | Atendido |
-| Ambiente reproduzível | `Dockerfile`, `compose.yaml` e scripts | Atendido |
-| Harness, casos principais e de borda | 46 testes automatizados | Atendido |
-| Logs e pipeline | `EXECUTION.md`, evidências e GitHub Actions | Atendido |
+| 001 | Python e biblioteca padrão | Reprodução simples; servidor para demonstração local |
+| 002 | SQLite e transação única | Evitar corrida; escritores serializados |
+| 003 | UTC e intervalos semiabertos | Fusos equivalentes e adjacência; cliente converte exibição |
+| 004 | Cancelamento lógico idempotente | Histórico simples; não é auditoria completa |
+| 005 | Relógio injetável e banco isolado | Testes determinísticos; não comprova carga |
+| 006 | PR revisado e evidência autêntica | Rastreabilidade; precisa de ações humanas reais |
 
-Cada integrante deve submeter no Moodle o mesmo PDF final com o link do repositório, nomes e RAs, resumo do ambiente e da IA, comandos do harness e a evidência do pipeline.
+Contexto, consequências e defesa em [ARCHITECTURE.md](docs/ARCHITECTURE.md) e [ENTREGA_2.md](docs/ENTREGA_2.md).
+
+## Testes e refinamento
+
+```sh
+python3 scripts/run_tests.py --output-dir evidence/latest
+```
+
+A suíte tem **50 testes**: 32 de serviço/persistência, 14 HTTP e quatro do processo real do harness. A execução local da Entrega 2 em CPython 3.12.3/Linux terminou com **0 falhas, 0 erros, 0 ignorados e saída 0**.
+
+A mesma suíte também passou no Docker com CPython 3.13.7: 50 testes, zero falhas/erros. [Log Docker](evidence/entrega2-docker/tests.log) e [resumo](evidence/entrega2-docker/summary.json).
+
+[Log local](evidence/entrega2-local/tests.log) · [Resumo/hashes](evidence/entrega2-local/summary.json) · [Relatório de execução](docs/EXECUTION.md).
+
+Os quatro novos testes comprovam sucesso, falha de asserção, exceção e suíte vazia em projetos temporários. As falhas deliberadas são fixtures isoladas; todos os testes da suíte principal passam. O harness registra ambiente, data, HEAD, estado da árvore e manifesto SHA-256. Não se declara cobertura percentual.
+
+O [workflow](.github/workflows/tests.yml) executa a suíte em Python 3.13.7 dentro do Docker e publica evidências por 30 dias. Os logs atuais também ficam versionados. Conferir o check do novo PR antes de integrar.
+
+[REFINEMENTS.md](docs/REFINEMENTS.md) distingue esclarecimentos iniciais, quatro erros concretos corrigidos, validações humanas e refinamentos da Entrega 2. Os contratos HTTP e a implementação funcional foram preservados; a nova etapa reforça a comprovação do harness e corrige a documentação.
+
+## Governança, IA e entrega
+
+Fluxo exigido: `feature/* -> develop -> main`, por PR, revisão de outro integrante e check harness aprovado. A auditoria registra uma exceção real: o PR #11 teve base main; #13 está aberto. Aprovações históricas não aprovam esta proposta. As proteções registradas em setembro não foram reconsultadas nesta etapa.
+
+O Codex apoiou especificação, código, testes e revisão na preparação inicial. Na Entrega 2, apoiou inspeção do GitHub, testes, documentação e PDF, sem subagentes. [AGENTS.md](AGENTS.md) e [AI_WORKFLOW.md](docs/AI_WORKFLOW.md) documentam o fluxo; o relatório analisa alucinações, prompt injection, permissões, privacidade, autoria e aprendizagem. A responsabilidade e a aprovação são humanas.
+
+| Item da Entrega 2 | Evidência |
+| --- | --- |
+| Solução publicada e governança | Código, Issues/PRs e [auditoria](docs/GOVERNANCE.md) |
+| Testes e casos de borda | 50/50 aprovados (100% de passagem), logs e resumo atual |
+| Erros, correções e re-especificação | SPEC e REFINEMENTS |
+| README, fluxo e defesa | Este arquivo, diagrama e ADRs |
+| Relato técnico da experiência | Seção 10 do relatório, baseada no histórico |
+| Comparação entre ferramentas de IA | Seção 7: Codex CLI, Claude Code, Cursor e Antigravity; só Codex teve uso efetivo |
+| Cinco itens de submissão | Seção 11 do relatório e checklist |
+| Análise crítica de IA | Seções 8 e 9 do relatório |
+| Documento acadêmico | [PDF da Entrega 2](output/pdf/ReservaLab_Entrega_2.pdf) |
+| Revisão e integração final | Pendentes de revisão do novo PR e promoção aprovada |
+
+O [complemento de escopo RFN-017](docs/ENTREGA_2_REFINEMENT.md) registra o ajuste pelo enunciado completo.
+
+A comparação usa documentação oficial; não atribui uso ou resultados experimentais às ferramentas não utilizadas.
+
+Antes de submeter, concluir [DELIVERY_CHECKLIST.md](docs/DELIVERY_CHECKLIST.md). Cada integrante confere e envia o documento conforme a orientação da disciplina.
+
+Demonstração acadêmica local: sem autenticação, autorização por usuário, frontend ou integração institucional. O código publicado não representa hospedagem pública do serviço.
