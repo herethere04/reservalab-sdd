@@ -2,9 +2,9 @@
 ## Publicação do projeto, refinamento e análise crítica do uso de IA
 
 Bootcamp III - Turma B - 0726 - Campus Virtual - 2026/2.
-Documento revisado em 14/10/2026 após recebimento do escopo completo da atividade. Prazo informado no enunciado: 17/10/2026, às 23h55.
+Documento atualizado em 16/10/2026 após a integração final. Prazo informado no enunciado: 17/10/2026, às 23h55.
 Repositório público: [herethere04/reservalab-sdd](https://github.com/herethere04/reservalab-sdd).
-Proposta da Entrega 2: branch `feature/entrega-2`, baseada em `develop`; [Issue #14](https://github.com/herethere04/reservalab-sdd/issues/14) e [PR #15](https://github.com/herethere04/reservalab-sdd/pull/15).
+Entrega 2 publicada em `main` pelo [PR #13](https://github.com/herethere04/reservalab-sdd/pull/13), após integração do [PR #15](https://github.com/herethere04/reservalab-sdd/pull/15) em `develop`. Acompanhamento: [Issue #14](https://github.com/herethere04/reservalab-sdd/issues/14).
 
 | Integrante | RA | Área de responsabilidade |
 | --- | --- | --- |
@@ -13,7 +13,7 @@ Proposta da Entrega 2: branch `feature/entrega-2`, baseada em `develop`; [Issue 
 | Pedro Ivo Gonçalves Pinheiro Coelho | 22453629 | Regras e persistência |
 | Eduardo Cabral Nunes | 22454089 | Ambiente, harness e evidências |
 
-Preparação técnica e redação assistidas pelo Codex. Os nomes e RAs identificam a equipe real. A aprovação deste novo trabalho deve ser registrada por outro integrante no PR. O relatório usa os artefatos e o histórico consultados; não atribui entrevistas, reuniões ou execuções novas a colegas que não as registraram.
+Preparação técnica e redação assistidas pelo Codex. Os nomes e RAs identificam a equipe real. Os PRs de integração receberam revisões humanas registradas no GitHub. O relatório usa os artefatos e o histórico consultados; não atribui entrevistas, reuniões ou execuções novas a colegas que não as registraram.
 
 ## 1. Problema, solução e escopo funcional
 
@@ -31,7 +31,7 @@ Não foram acrescentados frontend, autenticação, serviços externos ou integra
 
 A aplicação e os testes usam Python 3.12 ou superior, biblioteca padrão, SQLite e unittest. O Dockerfile fixa Python 3.13.7. Não há pacote Python externo em produção, chave de API ou serviço pago necessário. A geração deste PDF é uma atividade documental separada e não adiciona dependências à API.
 
-Execução local após obter a branch revisada:
+Execução local após obter `main`:
 
 ```text
 python3 scripts/run_tests.py --output-dir evidence/latest
@@ -83,13 +83,15 @@ Em 14/10/2026, a suíte ampliada executou 50 testes em CPython 3.12.3 no Linux, 
 | Integração HTTP | 14 | Ciclo real de requisições, status, JSON, mídia, tamanho e entradas inválidas. |
 | Controle do harness | 4 | Sucesso, falha, exceção e suíte vazia, incluindo arquivos de evidência e saída do processo. |
 
-O conjunto foi testado sobre a base Git bffa8f1c0ce0a5ecf11007598cf0e133d40e7dd6, com alterações ainda não commitadas. O próprio resumo registra working_tree_dirty: true. O manifesto SHA-256 dos 16 arquivos medidos é b4850b422970dac2e71099d34fdcadd26affdd9a76cd3460b062aaa567680f5e. Essa distinção impede atribuir ao commit-base testes de arquivos que ainda não estavam nele.
+Essa execução de 14/10 foi feita sobre a base Git bffa8f1c0ce0a5ecf11007598cf0e133d40e7dd6, com alterações ainda não commitadas (`working_tree_dirty: true`). Seu manifesto SHA-256 dos 16 arquivos medidos é b4850b422970dac2e71099d34fdcadd26affdd9a76cd3460b062aaa567680f5e. Ela documenta a preparação, mas a validação da versão integrada está registrada a seguir.
 
 A primeira tentativa, em ambiente com sockets bloqueados, executou 46 testes e encontrou 14 erros HTTP. O harness retornou falha. Após permitir sockets locais, os mesmos fontes passaram em 46 testes. Os dois resultados foram preservados: evidence/entrega2-baseline e evidence/entrega2-local-baseline. A causa era ambiental; não se alterou teste nem regra de negócio para obter aprovação.
 
 Após Áquila iniciar o Docker Desktop, a imagem Python 3.13.7 foi construída e executou os mesmos 50 testes: zero falhas/erros/ignorados, saída 0 e 9,136 segundos. O Compose não pôde montar a pasta temporária porque ela não era compartilhada com o Desktop. A execução usou docker run sem bind mount; os logs internos foram recuperados por docker cp e estão em evidence/entrega2-docker. Os hashes dos 13 fontes presentes no contêiner coincidem com os do resumo local. O HEAD não está disponível na imagem porque .git não é copiado.
 
-O GitHub também confirmou success na execução histórica 34731777935 do PR #12, inclusive build, harness e publicação. Essa observação comprova o estado histórico consultado; O [CI do PR #15](https://github.com/herethere04/reservalab-sdd/actions/runs/38636863666), sobre o commit 0097365cb13e944a7bf67783bbb7ded4cf780035, também registrou Python 3.13.7, 50 testes, zero falhas/erros/ignorados e success: true. Essa execução pertence à primeira versão publicada; o novo commit documental deve ter seu próprio check conferido.
+Em 16/10/2026, o commit final de `develop`, d1b38d7396964ae74883f1a22030577e579eff8d, passou novamente em 50/50 testes locais (Python 3.12.3, 8,757 s) e na mesma imagem Docker usada pelo projeto (Python 3.13.7, 12,378 s), sem falhas, erros ou testes ignorados. A tentativa literal de `docker compose run --build --rm tests` construiu a imagem, mas a montagem de `/tmp` foi recusada pelo Docker Desktop; a imagem foi executada com `docker run` sem bind mount e os logs foram recuperados. Não se declara sucesso do comando Compose. As evidências dessa reprodução estão na [Issue #18](https://github.com/herethere04/reservalab-sdd/issues/18).
+
+O [Actions 38725772762](https://github.com/herethere04/reservalab-sdd/actions/runs/38725772762), referente ao mesmo commit d1b38d, registrou Python 3.13.7, 50/50 testes aprovados, zero falhas/erros/ignorados e conclusão bem-sucedida. Seu artefato foi baixado e comparado: os hashes SHA-256 dos 13 arquivos comuns coincidem entre execução local, Docker e CI. Os resumos locais medem três arquivos adicionais ausentes da imagem. `main` contém o merge d3e55d6da65fa1ff2c541214b20418c79d084790 e tem a mesma árvore Git de `develop` (57ffd1bdb3ada3da4bf94118957138b98a2ae3e9), sem mudança nos arquivos testados durante a promoção.
 
 A suíte exercita comportamentos e fronteiras definidos no contrato. Não foi medida cobertura percentual, carga, latência, recuperação de desastre ou resistência a ataques. Os artefatos históricos do Actions têm retenção de 30 dias; por isso esta entrega inclui logs versionados da execução nova.
 
@@ -114,7 +116,7 @@ Na Entrega 2, RFN-014 fecha a lacuna de comprovação de CT-15: o script já rej
 
 ## 6. Governança, colaboração e sprint
 
-A consulta de 14/10/2026 verificou oito Issues iniciais fechadas e os PRs abaixo. O snapshot está versionado em evidence/entrega2-governanca/snapshot.json. As revisões consideradas válidas têm estado APPROVED; revisões DISMISSED não são usadas como aprovação final.
+A consulta inicial de 14/10/2026 verificou oito Issues fechadas e foi preservada em evidence/entrega2-governanca/snapshot.json. Os estados da tabela foram atualizados em 16/10/2026. As revisões consideradas válidas têm estado APPROVED; revisões DISMISSED não são usadas como aprovação final.
 
 | PR | Autor GitHub | Base real | Aprovação observada | Estado |
 | --- | --- | --- | --- | --- |
@@ -122,15 +124,16 @@ A consulta de 14/10/2026 verificou oito Issues iniciais fechadas e os PRs abaixo
 | #10 | g0bss | develop | herethere04 | Integrado em 13/09 |
 | #11 | Claneeer | main | eddyocn | Integrado em 12/09 |
 | #12 | g0bss | develop | herethere04 | Integrado em 13/09 |
-| #13 | herethere04 | main, origem develop | eddyocn | Aberto na consulta |
+| #15 | herethere04 | develop, origem feature/entrega-2 | Claneeer | Integrado em 14/10, 23h44 (Brasília) |
+| #13 | herethere04 | main, origem develop | g0bss no head final | Integrado em 16/10, 10h10 (Brasília) |
 
 A equipe real está identificada na capa. Os PRs e comentários ligam herethere04 à coordenação de Áquila, g0bss à contribuição de Gabriel, Claneeer à validação de Pedro e eddyocn à revisão/evidência de Eduardo. O autor de um PR não necessariamente escreveu cada arquivo: #12 foi aberto por g0bss e contém relato de reprodução atribuída a Eduardo. A análise distingue metadados de autoria e relato de contribuição.
 
-Existe uma divergência relevante: #11 foi integrado diretamente de feature para main, embora ADR-006 planeje feature -> develop -> main. Houve aprovação de outra conta, mas isso não torna o percurso idêntico ao previsto. O PR #13 continua aberto, e a Issue #8 foi fechada antes de sua integração. O relatório preserva esses fatos e não declara a governança perfeita.
+Existe uma divergência histórica relevante: #11 foi integrado diretamente de feature para main, embora ADR-006 planeje feature -> develop -> main. Houve aprovação de outra conta, mas isso não torna o percurso idêntico ao previsto. A Issue #8 foi fechada antes da integração do PR #13. Este PR foi posteriormente atualizado, aprovado no head final por g0bss e integrado em `main`; a aprovação antiga de eddyocn consta como DISMISSED e não foi contada. O relatório preserva esses fatos e não declara a governança perfeita.
 
-A nova sprint está ligada à Issue #14 e à branch feature/entrega-2. Seu escopo inclui controle do harness, evidências atuais, README, defesa técnica e análise crítica. Os critérios de merge são testes aprovados, documentação consistente, diff revisado por outro integrante e feedback resolvido. A promoção para main depende de revisão humana, como exige AGENTS.md.
+A sprint da Entrega 2 está ligada à Issue #14 e à branch feature/entrega-2. Seu escopo inclui controle do harness, evidências atuais, README, defesa técnica e análise crítica. Os critérios de merge foram testes aprovados, documentação consistente, diff revisado por outro integrante e feedback resolvido. Claneeer aprovou o PR #15 antes da integração em `develop`; g0bss aprovou o PR #13 sobre o head d1b38d7396964ae74883f1a22030577e579eff8d antes da promoção para `main`. Os três checks do harness desse head foram aprovados.
 
-As proteções de branches foram documentadas em setembro; sua configuração atual não foi reconsultada. Aprovações e checks anteriores pertencem aos commits que avaliaram. Uma alteração nova exige nova conferência. Não foram realizadas aprovações em nome de colegas ou merges na preparação da Entrega 2.
+As proteções de branches foram documentadas em setembro; sua configuração atual não foi reconsultada. Aprovações e checks pertencem aos commits que avaliaram. A promoção de 16/10 foi realizada pela conta herethere04 com auxílio do Codex a pedido do usuário, depois da revisão humana real. Isso não constitui execução pessoal ou aprovação de eddyocn. Uma alteração posterior do PDF requer conferência humana própria antes da submissão; as aprovações anteriores cobriram a versão então publicada.
 
 ## 7. Análise comparativa das ferramentas de IA
 
@@ -154,7 +157,7 @@ Sem baseline sem IA ou medições comuns de tempo, custo e defeitos, não se est
 
 A aplicação não executa um agente de IA em seu funcionamento. A superfície avaliada é o uso do Codex durante desenvolvimento e documentação, com acesso a arquivos e ao GitHub. A IA ajudou a estruturar contrato, gerar código/testes, revisar casos de borda e organizar evidências. O valor depende de validação observável, e não da confiança no texto gerado.
 
-Alucinação e confiança excessiva são riscos concretos. Um agente pode citar arquivo inexistente, confundir resultado histórico com atual ou declarar um PR integrado apenas por encontrar uma aprovação. Nesta entrega, a consulta de metadados revelou #13 aberto e #11 com base diferente do plano. O controle adotado é vincular afirmações a logs, hashes, commits e revisões. Os controles reduzem erros, mas não provam que todo cenário foi examinado.
+Alucinação e confiança excessiva são riscos concretos. Um agente pode citar arquivo inexistente, confundir resultado histórico com atual ou declarar um PR integrado apenas por encontrar uma aprovação. Nesta entrega, a consulta inicial revelou #13 ainda aberto e #11 com base diferente do plano; o estado de #13 foi conferido novamente após o merge. O controle adotado é vincular afirmações a logs, hashes, commits e revisões. Os controles reduzem erros, mas não provam que todo cenário foi examinado.
 
 Prompt injection pode ocorrer quando arquivos, PDFs, Issues ou comentários contêm instruções que tentam desviar o agente. Segundo a OWASP, conteúdo externo pode modificar o comportamento de um modelo e provocar ações indevidas. No projeto, o enunciado foi tratado como fonte de requisitos da tarefa autorizada; não como autorização autônoma para enviar mensagens, obter segredos ou alterar permissões. A prevenção combina escopo, menor privilégio e revisão de ações com efeito externo.
 
@@ -188,13 +191,13 @@ O histórico mostra que o trabalho em grupo exigiu alinhar especificação, exem
 
 O aprendizado técnico central é que comportamentos aparentemente simples escondem fronteiras: um offset inválido pode ser normalizado, booleanos podem se parecer com inteiros e dois pedidos podem disputar uma sala se a transação for dividida. O aprendizado de governança é que uma checklist preenchida ou Issue fechada não substitui examinar base do PR, commit, revisão e estado do merge.
 
-A Entrega 2 ampliou a validação de 46 para 50 testes e corrigiu inconsistências documentais. Não foi necessário alterar a implementação funcional para fabricar uma nova correção. A revisão independente deve conferir o relatório e repetir a suíte antes de integrar a proposta.
+A Entrega 2 ampliou a validação de 46 para 50 testes e corrigiu inconsistências documentais. A versão integrada foi reproduzida localmente, em Docker e no CI; não foi necessário alterar a implementação funcional para fabricar uma nova correção. O PR #15 foi revisado por Claneeer e integrado em `develop`; o PR #13 foi revisado por g0bss no head final e integrado em `main`.
 
-Antes da submissão, o grupo deve obter revisão real do novo PR, confirmar o check do commit final, concluir a integração em develop e a promoção aprovada para main. Deve também reconciliar #13 com a promoção final e revisar o PDF se o conteúdo mudar. A submissão acadêmica é realizada pelos integrantes no ambiente da disciplina.
+Esta atualização documental reflete o estado dos PRs em 16/10/2026. Como o PDF mudou depois das aprovações registradas, outro integrante deve conferir este arquivo final e seus links antes do envio. A submissão acadêmica é realizada individualmente pelos integrantes no ambiente da disciplina; nenhum envio ao Moodle foi comprovado nesta atualização.
 
 Após a homologação, o líder e todos os demais membros devem enviar o mesmo PDF consolidado pela Sala Online, conforme o enunciado completo. A submissão por uma pessoa não substitui a dos demais.
 
-A solução atende ao escopo funcional inicial e tem evidências locais e Docker atuais. A análise crítica explicita limites de segurança, autonomia, autoria e governança. O estado de revisão da nova proposta permanece distinto da implementação já existente e das aprovações históricas.
+A solução atende ao escopo funcional inicial e tem evidências atuais locais, Docker e CI. A análise crítica explicita limites de segurança, autonomia, autoria e governança. As aprovações humanas de #15 e #13 estão registradas; a conferência da nova redação deste PDF é uma etapa documental posterior.
 
 ## 11. Conferência dos cinco itens de submissão
 
@@ -202,22 +205,24 @@ O enunciado completo determina um único PDF consolidado enviado pelo líder e p
 
 | Item exigido | Conteúdo neste PDF | Situação |
 | --- | --- | --- |
-| 1. Repositório público atualizado | URL clicável na capa; arquitetura e execução nas seções 1 a 3; proposta no PR #15. | Publicado em feature/entrega-2; integração final ainda depende da equipe. |
+| 1. Repositório público atualizado | URL clicável na capa; arquitetura e execução nas seções 1 a 3; PRs #15 e #13. | Aplicação, testes e documentação publicados em main pelo merge d3e55d6. |
 | 2. Nome completo e RA | Quatro integrantes identificados na capa e na fonte editável. | Presente, com dados reais autorizados. |
-| 3. Relatório de testes com 100% de passagem | Seção 4: 50/50 passaram, zero falhas/erros/ignorados; logs locais/Docker e link do CI. | Comprovado nas execuções identificadas; não é cobertura percentual de código. |
+| 3. Relatório de testes com 100% de passagem | Seção 4: 50/50 passaram, zero falhas/erros/ignorados; reprodução local/Docker e CI do commit d1b38d. | Comprovado nas execuções identificadas; não é cobertura percentual de código. |
 | 4. Comparação e análise ético-técnica | Seção 7: matriz de quatro ferramentas; seções 8 e 9: alucinação/destruição, privacidade, IP e homologação humana. | Presente; uso efetivo do Codex separado da avaliação documental das alternativas. |
-| 5. Links de PRs com revisão em equipe | Seção 6 e referências: PRs #9 a #13 e a nova proposta #15. | Revisões históricas comprovadas; a revisão do novo PR continua pendente. |
+| 5. Links de PRs com revisão em equipe | Seção 6 e referências: #15 aprovado por Claneeer e #13 aprovado por g0bss, além dos PRs históricos. | Ambos integrados; a nova redação deste PDF ainda requer conferência por colega. |
 
-Proposta atual: [PR #15 - Entrega 2](https://github.com/herethere04/reservalab-sdd/pull/15). Evidência remota da primeira versão do PR: [Actions 38636863666](https://github.com/herethere04/reservalab-sdd/actions/runs/38636863666). Novos commits documentais exigem conferir seu próprio check antes do merge.
+Integração da Entrega 2: [PR #15](https://github.com/herethere04/reservalab-sdd/pull/15) (`feature/entrega-2` -> `develop`) e [PR #13](https://github.com/herethere04/reservalab-sdd/pull/13) (`develop` -> `main`). Evidência do commit integrado: [Actions 38725772762](https://github.com/herethere04/reservalab-sdd/actions/runs/38725772762) e [registro técnico da Issue #18](https://github.com/herethere04/reservalab-sdd/issues/18).
 
-A publicação da proposta já permite conferir o código, o README, o relatório e as evidências. A entrega não é declarada integralmente homologada: o grupo deve revisar o commit final, integrar em develop, promover para main por PR revisado e concluir a submissão de todos. Se a revisão mudar o conteúdo, o PDF deve ser atualizado. Essa pendência não pode ser eliminada por uma aprovação da IA.
+O código, o README, o relatório original e as evidências foram integrados em `main` após revisão humana. Este PDF corrigido ainda precisa de conferência de outro integrante, pois sua redação foi atualizada depois das aprovações dos PRs. Cada integrante deve enviar o mesmo arquivo final pela Sala Online; a IA não pode declarar essa conferência nem a submissão em nome de ninguém.
 
 
 ## 12. Referências e navegação das evidências
 
 - [Repositório público](https://github.com/herethere04/reservalab-sdd).
-- [PR #15 - proposta atual da Entrega 2](https://github.com/herethere04/reservalab-sdd/pull/15).
-- [CI da primeira versão do PR #15](https://github.com/herethere04/reservalab-sdd/actions/runs/38636863666).
+- [PR #15 - Entrega 2 integrada em develop](https://github.com/herethere04/reservalab-sdd/pull/15).
+- [PR #13 - promoção revisada para main](https://github.com/herethere04/reservalab-sdd/pull/13).
+- [CI do commit integrado d1b38d](https://github.com/herethere04/reservalab-sdd/actions/runs/38725772762).
+- [Issue #18 - reprodução local, Docker e CI](https://github.com/herethere04/reservalab-sdd/issues/18).
 - [Codex CLI](https://learn.chatgpt.com/docs/codex/cli).
 - [Codex - instruções AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
 - [Codex - aprovações e segurança](https://learn.chatgpt.com/docs/agent-approvals-security).
@@ -234,12 +239,11 @@ A publicação da proposta já permite conferir o código, o README, o relatóri
 - [PR #10 - validações do contrato](https://github.com/herethere04/reservalab-sdd/pull/10).
 - [PR #11 - integração e revisão de regras](https://github.com/herethere04/reservalab-sdd/pull/11).
 - [PR #12 - ambiente e evidências](https://github.com/herethere04/reservalab-sdd/pull/12).
-- [PR #13 - promoção ainda aberta na consulta](https://github.com/herethere04/reservalab-sdd/pull/13).
 - [Actions histórico consultado](https://github.com/herethere04/reservalab-sdd/actions/runs/34731777935).
 - [Python 3.13 - limites de http.server](https://docs.python.org/3.13/library/http.server.html).
 - [SQLite - transações](https://www.sqlite.org/lang_transaction.html).
 - [GitHub - branches protegidas](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches).
 - [OWASP - prompt injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/).
 
-Referências consultadas em 14/10/2026. Fontes acadêmicas: enunciado completo da Entrega 2 fornecido pelo usuário nesta revisão e PDF ReservaLab - Entrega 1. Documentação interna: SPEC, ARCHITECTURE, REFINEMENTS, AI_WORKFLOW, EXECUTION e GOVERNANCE. Os links do repositório permitem conferir os artefatos; os logs locais da Entrega 2 estão versionados junto à proposta.
+Fontes técnicas consultadas em 14/10/2026; estado dos PRs e evidências reconsultado em 16/10/2026. Fontes acadêmicas: enunciado completo da Entrega 2 fornecido pelo usuário e PDF ReservaLab - Entrega 1. Documentação interna: SPEC, ARCHITECTURE, REFINEMENTS, AI_WORKFLOW, EXECUTION e GOVERNANCE. Os links do repositório permitem conferir os artefatos; logs iniciais estão versionados e a reprodução final está registrada na Issue #18.
 
