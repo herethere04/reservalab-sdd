@@ -11,8 +11,8 @@ O registro de revisão humana e de execução independente deve ser preenchido p
 1. Ler `AGENTS.md`, `docs/SPEC.md` e os ADRs antes de alterar comportamento.
 2. Identificar os requisitos e cenários de aceitação da tarefa.
 3. Se o contrato for ambíguo, propor o refinamento e registrar a justificativa em `docs/REFINEMENTS.md`.
-4. Implementar a menor unidade capaz de cumprir o contrato e preservar os limites entre HTTP, serviço e banco.
-5. Criar ou ajustar testes que verifiquem comportamento observável, incluindo os limites relevantes.
+4. Criar ou ajustar testes que verifiquem comportamento observável, incluindo os limites relevantes.
+5. Implementar a menor unidade capaz de cumprir o contrato e preservar os limites entre HTTP, serviço e banco.
 6. Executar o harness; corrigir falhas e conferir o relatório real.
 7. Conferir o diff, atualizar documentação e abrir PR vinculado à Issue.
 8. Obter revisão de outro integrante e aprovação dos checks antes do merge.
@@ -46,3 +46,10 @@ O comando do harness é `python scripts/run_tests.py --output-dir evidence/lates
 ## Evidências e limites
 
 Os commits, diffs, logs do harness e checks no GitHub documentam os artefatos e validações técnicas. As Issues e revisões em contas individuais documentam a participação humana. Ao relatar uma execução, informar o comando, ambiente, data e resultado observado. Se um ambiente não foi executado, registrar a limitação explicitamente.
+
+
+## Participação na Entrega 2
+
+Em 14/10/2026, por solicitação de Áquila, o Codex leu o enunciado e a Entrega 1, consultou GitHub (Issues, PRs, revisões e Actions), inspecionou os fontes, detalhou CT-15, acrescentou quatro testes do harness, trocou nomes reais dos fixtures por dados fictícios e preparou README, relatório, PDF e evidências. Nesta etapa não foram utilizados subagentes. Os contratos da API e a implementação de produção foram preservados.
+
+A solicitação autorizou a preparação/publicação da proposta; ela não representa aprovação de outro integrante. A mensagem do commit identifica a preparação assistida pelo Codex; a publicação usa a conta autorizada do GitHub. A análise crítica completa, com riscos, controles e limitações, está em [ENTREGA_2.md](ENTREGA_2.md). Não foram executadas reuniões nem coletados depoimentos pessoais; o relato técnico utiliza o histórico verificável.

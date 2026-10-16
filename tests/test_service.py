@@ -25,7 +25,7 @@ class BookingServiceTests(unittest.TestCase):
     def payload(self, **changes):
         result = {
             "room_id": 1,
-            "student_name": "Áquila de Brito Barbosa",
+            "student_name": "Estudante Exemplo",
             "starts_at": "2030-01-01T10:00:00Z",
             "ends_at": "2030-01-01T11:00:00Z",
             "participants": 4,
@@ -49,10 +49,10 @@ class BookingServiceTests(unittest.TestCase):
         self.assertEqual(self.service.list_bookings(), [])
 
     def test_create_returns_uuid_and_normalized_booking(self):
-        booking = self.service.create_booking(self.payload(student_name="  Áquila de Brito Barbosa  "))
+        booking = self.service.create_booking(self.payload(student_name="  Estudante Exemplo  "))
         UUID(booking["id"])
         self.assertEqual(booking["room_id"], 1)
-        self.assertEqual(booking["student_name"], "Áquila de Brito Barbosa")
+        self.assertEqual(booking["student_name"], "Estudante Exemplo")
         self.assertEqual(booking["starts_at"], "2030-01-01T10:00:00Z")
         self.assertEqual(booking["ends_at"], "2030-01-01T11:00:00Z")
         self.assertEqual(booking["participants"], 4)
