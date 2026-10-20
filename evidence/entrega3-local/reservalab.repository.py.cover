@@ -1,0 +1,98 @@
+     1 """Persistência SQLite; uma conexão por operação e escrita serializada."""
+     2 
++    3 from contextlib import contextmanager
++    4 from pathlib import Path
++    5 import sqlite3
++    6 from uuid import uuid4
+     7 
++    8 from .domain import DomainError
+     9 
+    10 
++   11 class BookingRepository:
+    12     """Mantém salas e reservas sem compartilhar conexões entre threads."""
+    13 
++   14     def __init__(self, db_path: str | Path):
++   15         self.db_path = str(db_path)
++   16         if self.db_path == ":memory:":
++   17             raise ValueError("Use um arquivo SQLite; bancos :memory: não são suportados.")
++   18         Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
++   19         with self._connection() as connection:
++   20             connection.executescript(
++   21                 """
+    22                 CREATE TABLE IF NOT EXISTS rooms (
+    23                     id INTEGER PRIMARY KEY,
+    24                     name TEXT NOT NULL,
+    25                     capacity INTEGER NOT NULL CHECK (capacity > 0)
+    26                 );
+    27                 CREATE TABLE IF NOT EXISTS bookings (
+    28                     id TEXT PRIMARY KEY,
+    29                     room_id INTEGER NOT NULL REFERENCES rooms(id),
+    30                     student_name TEXT NOT NULL,
+    31                     starts_at TEXT NOT NULL,
+    32                     ends_at TEXT NOT NULL,
+    33                     participants INTEGER NOT NULL CHECK (participants > 0),
+    34                     status TEXT NOT NULL CHECK (status IN ('active', 'cancelled'))
+    35                 );
+    36                 CREATE INDEX IF NOT EXISTS bookings_room_interval
+    37                     ON bookings(room_id, status, starts_at, ends_at);
+    38                 INSERT OR IGNORE INTO rooms (id, name, capacity) VALUES (1, 'Sala 1', 4);
+    39                 INSERT OR IGNORE INTO rooms (id, name, capacity) VALUES (2, 'Sala 2', 8);
+    40                 """
+    41             )
+    42 
++   43     @contextmanager
++   44     def _connection(self):
++   45         connection = sqlite3.connect(self.db_path, timeout=10)
++   46         connection.row_factory = sqlite3.Row
++   47         connection.execute("PRAGMA foreign_keys = ON")
++   48         try:
++   49             with connection:
++   50                 yield connection
+    51         finally:
++   52             connection.close()
+    53 
++   54     def list_rooms(self) -> list[dict]:
++   55         with self._connection() as connection:
++   56             return [dict(row) for row in connection.execute("SELECT id, name, capacity FROM rooms ORDER BY id")]
+    57 
++   58     def list_bookings(self) -> list[dict]:
++   59         with self._connection() as connection:
++   60             return [dict(row) for row in connection.execute("SELECT * FROM bookings ORDER BY starts_at, id")]
+    61 
++   62     def create_booking(self, booking: dict) -> dict:
+    63         """Valida conflito e insere na mesma transação, inclusive sob concorrência."""
++   64         if booking["room_id"] > 2**63 - 1:
++   65             raise DomainError("room_not_found", "Sala não encontrada.", 404)
++   66         with self._connection() as connection:
++   67             connection.execute("BEGIN IMMEDIATE")
++   68             room = connection.execute("SELECT capacity FROM rooms WHERE id = ?", (booking["room_id"],)).fetchone()
++   69             if room is None:
++   70                 raise DomainError("room_not_found", "Sala não encontrada.", 404)
++   71             if booking["participants"] > room["capacity"]:
++   72                 raise DomainError("invalid_participants", "O número de participantes excede a capacidade da sala.")
++   73             conflict = connection.execute(
++   74                 """SELECT 1 FROM bookings
+    75                    WHERE room_id = ? AND status = 'active'
+    76                      AND starts_at < ? AND ends_at > ? LIMIT 1""",
++   77                 (booking["room_id"], booking["ends_at"], booking["starts_at"]),
++   78             ).fetchone()
++   79             if conflict is not None:
++   80                 raise DomainError("booking_conflict", "A sala já está reservada nesse intervalo.", 409)
++   81             result = {"id": str(uuid4()), **booking, "status": "active"}
++   82             connection.execute(
++   83                 """INSERT INTO bookings
+    84                    (id, room_id, student_name, starts_at, ends_at, participants, status)
+    85                    VALUES (:id, :room_id, :student_name, :starts_at, :ends_at, :participants, :status)""",
++   86                 result,
+    87             )
++   88             return result
+    89 
++   90     def cancel_booking(self, booking_id: str) -> dict:
+    91         """Cancelar novamente mantém o resultado e não remove o histórico."""
++   92         with self._connection() as connection:
++   93             connection.execute("BEGIN IMMEDIATE")
++   94             row = connection.execute("SELECT * FROM bookings WHERE id = ?", (booking_id,)).fetchone()
++   95             if row is None:
++   96                 raise DomainError("booking_not_found", "Reserva não encontrada.", 404)
++   97             connection.execute("UPDATE bookings SET status = 'cancelled' WHERE id = ?", (booking_id,))
++   98             return {**dict(row), "status": "cancelled"}
