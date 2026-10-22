@@ -1,32 +1,3 @@
-# Execução atual - Entrega 3 (20/10/2026)
-
-Issue #21. Execuções assistidas pelo Codex; não são atribuídas pessoalmente a colegas. A base main inicial 5be5482 passou em 50/50 testes antes das alterações. A suíte candidata foi ampliada para 64 testes relevantes, sem mudar as regras de reserva.
-
-| Execução | Ambiente | Resultado | Tempo registrado |
-| --- | --- | --- | --- |
-| Cobertura local final | CPython 3.12.3 / Linux | 64/64, zero falhas/erros/ignorados, saída 0 | 13.305 s |
-| Cobertura padronizada final | CPython 3.13.7 / Linux | 64/64, zero falhas/erros/ignorados, saída 0 | 15.557 s |
-| Serviço Compose tests | CPython 3.13.7 / Linux | 64/64, zero falhas/erros/ignorados, saída 0 | 13,452 s |
-
-Cobertura real final nos dois intérpretes: **223/223 linhas críticas (100%)** e **243/243 linhas da aplicação (100%)**, conforme o escopo e a metodologia de scripts/run_coverage.py. Não é cobertura de branches, subprocessos de fixtures, biblioteca padrão ou SQLite nativo. Não prova ausência de defeitos. Nenhum módulo não executado foi omitido do denominador.
-
-- [Local: log e resumo](../evidence/entrega3-local/tests/) · [cobertura](../evidence/entrega3-local/coverage.md) · [JSON/hashes](../evidence/entrega3-local/coverage.json).
-- [Padronizada: log e resumo](../evidence/entrega3-docker/tests/) · [cobertura](../evidence/entrega3-docker/coverage.md) · [JSON/hashes](../evidence/entrega3-docker/coverage.json).
-- [Comparação de fontes](../evidence/entrega3-package/comparison.json): 20 arquivos comuns coincidem por SHA-256 entre local e imagem; arquivos de ambiente/workflow não copiados à imagem são adicionais no manifesto local.
-- [Empacotamento](../evidence/entrega3-package/smoke.log): API iniciou pelo Compose; saúde, identificador 1.0.0, catálogo e criação 201 conferidos. Após encerrar/recriar o contêiner, a reserva fictícia permaneceu no volume. Somente os recursos isolados desse teste foram removidos depois.
-
-Comando local: `python3 scripts/run_coverage.py --output-dir evidence/entrega3-local`.
-A imagem foi validada com docker run, sem bind mount, e o serviço final também passou pelo Compose: `docker compose -p reservalab-e3-final-20261020 run --build --rm --volume <diretório-compartilhado>:/app/evidence coverage`. O caminho absoluto local foi abreviado nesta documentação; a execução usou o diretório de evidências compartilhado pelo Docker Desktop. O resumo em entrega3-docker corresponde a essa última execução Compose.
-O serviço Compose tests foi executado com --volume apontando ao diretório local compartilhado de evidências, em substituição ao bind mount de /tmp. Essa opção de caminho é ambiental; não houve mudança do teste para obter aprovação. O Compose foi validado e o comando `docker compose -p reservalab-e3-20261020 up --build -d api` iniciou a aplicação.
-
-A primeira medição padronizada passou em 64 testes, mas falhou ao gerar cobertura por marcador sem número de linha no Python 3.13. Evidência preservada em [entrega3-coverage-compatibility](../evidence/entrega3-coverage-compatibility/); correção RFN-022, sem esconder linhas reais. Apenas as execuções posteriores são declaradas cobertura aprovada.
-
-O resumo local registra base Git f61b0d5a423397fc9b414bb5e4ad9cef05286519 e working_tree_dirty=True; os hashes identificam a proposta ainda modificada. Na imagem .git não é copiado, portanto HEAD é indisponível e o vínculo é feito pelos fontes comuns. O check do PR final deve ser conferido no commit publicado; a publicação oficial repetirá testes/cobertura no commit exato de main.
-
-## Registros históricos das entregas anteriores
-
-Os trechos abaixo preservam consultas anteriores; frases como PR #13 aberto não descrevem o estado de 20/10, atualizado em GOVERNANCE.md.
-
 # Relatório de execução
 
 ## Execução local após revisão técnica

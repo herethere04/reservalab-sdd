@@ -2,13 +2,11 @@
 
 import argparse
 
-from . import __version__
 from .server import create_server
 
 
 def main():
     parser = argparse.ArgumentParser(description="API local de reservas de salas de estudo")
-    parser.add_argument("--version", action="version", version=f"ReservaLab {__version__}")
     parser.add_argument("--host", default="127.0.0.1", help="Interface de rede (padrão: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=8000, help="Porta HTTP (padrão: 8000)")
     parser.add_argument("--db", default="data/reservalab.db", help="Arquivo SQLite (padrão: data/reservalab.db)")

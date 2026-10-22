@@ -1,15 +1,17 @@
-# Sprint final - Entrega 3
+# Sprint da Entrega 2
 
-20 a 25/10/2026; central #21; feature/entrega-3-final → develop → main por PRs revisados. Prazo acadêmico: 25/10, 23h55 (Brasília).
+Issue rastreadora: [#14](https://github.com/herethere04/reservalab-sdd/issues/14). Base: develop; branch: feature/entrega-2. Preparação técnica assistida pelo Codex, a pedido da coordenação do projeto. Não se atribuem tarefas executadas por IA aos colegas.
 
-| Fase | Resultado verificável | Responsabilidade humana |
+| Etapa | Aceite | Situação |
 | --- | --- | --- |
-| Preparação | As-Built, cobertura, cenários de teste, empacotamento e materiais revisáveis | Codex prepara; não se atribui autoria pessoal a colegas |
-| Validação documental | Relato do commit/achados e revisão real | g0bss (#22), revisão cruzada eddyocn |
-| Homologação/reprodução | Logs reais, percentuais/linhas, CI e pacote conferidos | Claneeer (#23), revisão cruzada g0bss |
-| Demonstração/retrospectiva | Vídeo acessível 3-5 min e relato sem métricas inventadas | eddyocn (#24), revisão cruzada Claneeer |
-| Integração | PRs revisados e checks aprovados, main consolidada | Responsáveis pelas tarefas, sem push direto |
-| Release/documento | v1.0.0 no commit final, anexos e PDF definitivo com vídeo | eddyocn coordena; g0bss confere o PDF |
-| Submissão | Arquivo enviado pela Sala Online conforme enunciado | Equipe; envio não presumido |
+| Conferir baseline | 46 testes e histórico atual consultados | Executado, evidências preservadas |
+| Refinar CT-15 | Quatro testes do processo real do harness | Executado; suíte local 50/50 |
+| Consolidar relatório | README, ADRs, refinamentos, relato e análise crítica | Preparado para revisão |
+| Validar ambiente | Registrar execução local, Docker e CI separadamente | Conferir EXECUTION.md |
+| Revisão entre pares | Outro integrante avalia o commit final com sua conta | Pendente |
+| Integrar e promover | Checks/revisões válidos; feature -> develop -> main | Pendente |
+| Submeter | Documento conferido e enviado conforme disciplina | Ação dos integrantes |
 
-Duas frentes por colega, sem atribuição técnica à coordenação herethere04, conforme solicitação anterior. A preparação desta sprint não declara execução/homologação/gravação concluída por outra pessoa. Evidências das entregas anteriores continuam históricas.
+A coordenação acompanha a integração. Os integrantes conferem contratos/relatório, regras/atomicidade e ambiente/evidências conforme suas áreas. A divisão orienta a revisão e não declara contribuição nova já executada. A identificação real e as contribuições verificadas estão no README e no relatório.
+
+O [planejamento da Entrega 1](https://github.com/herethere04/reservalab-sdd/blob/bffa8f1c0ce0a5ecf11007598cf0e133d40e7dd6/docs/SPRINT.md) é preservado no histórico.

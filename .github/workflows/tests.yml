@@ -16,11 +16,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build standardized environment
         run: docker build -t reservalab:test .
-      - name: Run harness and line coverage inside container
+      - name: Run harness inside container
         run: |
           mkdir -p evidence/ci
           chmod 777 evidence/ci
-          docker run --rm -v "$PWD/evidence/ci:/app/evidence/ci" reservalab:test python scripts/run_coverage.py --output-dir /app/evidence/ci
+          docker run --rm -v "$PWD/evidence/ci:/app/evidence/ci" reservalab:test python scripts/run_tests.py --output-dir /app/evidence/ci
       - name: Publish execution logs
         if: always()
         uses: actions/upload-artifact@v4
