@@ -1,6 +1,6 @@
 # Especificação técnica — ReservaLab
 
-Versão do contrato: 1.0 · As-Built da Entrega 3, 20/10/2026 · Issue #21. Os contratos funcionais são preservados. Este documento descreve o código entregue; o mapa de componentes, esquema persistido e limites operacionais estão em AS_BUILT.md.
+Versão do contrato: 1.0 · Consolidação: Entrega 2, 14/10/2026. Os contratos funcionais da Entrega 1 são preservados; novas evidências e revisão documental estão vinculadas à Issue #14.
 
 ## 1. Problema e objetivo
 
@@ -64,15 +64,10 @@ Uma reserva contém `id` UUID, `room_id`, `student_name`, `starts_at`, `ends_at`
 | RNF-06 | Retornar erros como JSON legível, sem expor rastreamentos internos ao cliente. |
 | RNF-07 | Registrar evidências reais de execução do harness e executar a suíte no GitHub Actions em PRs. Uma falha deve resultar em código de saída diferente de zero. |
 | RNF-08 | Alterações em `main` e integração em `develop` devem ocorrer por PR, com revisão de outra pessoa registrada antes do merge. |
-| RNF-09 | Gerar cobertura real de linhas para todos os módulos da aplicação, destacando domínio, serviço, repositório e HTTP, com denominador, linhas ausentes e hashes dos fontes. Não confundir cobertura com 100% de passagem nem declarar cobertura de branches. |
-| RNF-10 | Publicar release estável v1.0.0 sobre o commit final homologado de main, com evidências, pacote de fontes e checksums. Não publicar como final uma branch de proposta ou release ainda não existente. |
-| RNF-11 | Disponibilizar vídeo real de 3 a 5 minutos com o fluxo funcional e testes ao vivo, acessível ao professor; o PDF de encerramento reúne link da release, identificação, testes/cobertura, vídeo e resumo executivo. |
 
-Não há meta de latência, escala, SLA ou percentual mínimo de cobertura definida no enunciado. A Entrega 3 mede e informa a cobertura efetiva; não exige nem presume 100% de cobertura. A suíte comprova os comportamentos exercitados, sem comprovar desempenho em produção.
+Não há meta de latência, escala, SLA ou cobertura percentual definida. A entrega comprova comportamento funcional em testes; não comprova desempenho em produção.
 
 ## 6. Contratos HTTP
-
-O identificador da versão usa `reservalab.__version__ = "1.0.0"`; a CLI `python -m reservalab --version` exibe esse identificador e o cabeçalho HTTP Server inclui `ReservaLab/1.0.0`. A tag oficial só existe após publicação aprovada.
 
 As rotas usam JSON UTF-8. Na criação, enviar `Content-Type: application/json`; parâmetros usuais como `charset=utf-8` podem acompanhar o tipo. Os exemplos abaixo são ilustrativos. As datas da criação devem ser ajustadas para o futuro quando executadas manualmente.
 
@@ -180,9 +175,6 @@ A tabela define os cenários mínimos a conferir na suíte e os requisitos que j
 | CT-13 | Duas criações simultâneas conflitantes resultam em apenas uma reserva. | RN-10 |
 | CT-14 | HTTP real: status, JSON, mídia inválida, excesso de corpo, método e rota inválidos. | RF-07, RNF-05, RNF-06 |
 | CT-15 | Harness termina com falha quando um teste falha e CI publica resultado verificável. | RNF-07 |
-| CT-16 | Relatório de cobertura inclui módulos não executados e linhas ausentes; falha da suíte mantém saída não zero e evidências. | RNF-07, RNF-09 |
-| CT-17 | Entrada CLI aceita parâmetros e encerra recursos, inclusive em interrupção; demonstração HTTP real valida o ciclo de reserva. | RF-01 a RF-08, RNF-02 |
-| CT-18 | Release somente a partir de main protegida, sem PR aberto, com homologação humana declarada e vídeo informado; anexos e checksums gerados. | RNF-10, RNF-11 |
 
 ## 9. Critério de conclusão da entrega
 

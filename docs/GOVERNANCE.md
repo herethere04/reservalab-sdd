@@ -1,22 +1,3 @@
-# Governança - estado da Entrega 3
-
-Consulta de 20/10/2026: main em `5be5482caab6e46f1318e70a6bf8ba5ed62afef8`, que integra o PR #20; nenhum PR aberto na consulta inicial. A proposta da Entrega 3 é rastreada por #21 e ainda exige revisão, homologação e promoção revisada. Não há tag/release oficial v1.0.0 na consulta inicial dos refs.
-
-| PR | Resultado verificado |
-| --- | --- |
-| #15 | Integrado em develop em 15/10 UTC, após aprovação de Claneeer. |
-| #13 | Integrado em main em 16/10 UTC; revisão atualizada APPROVED de g0bss no head d1b38d. A aprovação antiga de eddyocn foi DISMISSED. |
-| #19 | Atualização do relatório/PDF aprovada por g0bss e integrada em develop em 16/10 UTC. |
-| #20 | Integrado em main em 18/10 UTC; g0bss registrou APPROVED em 18/10 às 02:14 UTC antes do merge. O comentário de Claneeer é COMMENTED e não é contado como aprovação formal. |
-
-Na tentativa assistida anterior, o GitHub recusou o merge sem nova aprovação, demonstrando a exigência aplicada naquele momento. Não se declara auditoria de todas as configurações atuais de proteção; o workflow final também confere a flag protected de main antes da release. Nenhuma regra foi reduzida nesta preparação.
-
-A nova etapa mantém feature/* → develop → main com check harness e revisão de outra pessoa. Os responsáveis registram validação/aceite com suas próprias contas. Preparação, logs e documentos do Codex não são autoria, execução ou aprovação pessoal dos colegas. A release só é declarada publicada depois da ação efetiva no GitHub.
-
-## Registro histórico da consulta da Entrega 2
-
-O texto abaixo é o snapshot de 14/10; estados como PR #13 aberto são históricos e foram superados pelos eventos da tabela acima.
-
 # Governança verificada - Entrega 2
 
 Consulta: 14/10/2026. Fonte: conector GitHub, metadados de Issues/PRs e revisões. Snapshot em [evidence/entrega2-governanca/snapshot.json](../evidence/entrega2-governanca/snapshot.json). A existência de proteção em setembro não comprova sua configuração atual; ela não foi reconsultada nesta etapa.

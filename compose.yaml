@@ -16,11 +16,5 @@ services:
     command: ["python", "scripts/run_tests.py", "--output-dir", "/app/evidence/latest"]
     volumes:
       - ./evidence:/app/evidence
-  coverage:
-    build: .
-    profiles: ["test"]
-    command: ["python", "scripts/run_coverage.py", "--output-dir", "/app/evidence/coverage"]
-    volumes:
-      - ./evidence:/app/evidence
 volumes:
   booking-data:
