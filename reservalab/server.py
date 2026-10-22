@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from . import __version__
 from .domain import DomainError
 from .service import BookingService
 
@@ -24,7 +25,7 @@ def create_server(
     service = BookingService(db_path, now=now)
 
     class Handler(BaseHTTPRequestHandler):
-        server_version = "ReservaLab/0.1"
+        server_version = f"ReservaLab/{__version__}"
 
         def _send_json(self, status: int, payload: dict, allow: str | None = None):
             body = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")

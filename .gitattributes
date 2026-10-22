@@ -4,3 +4,4 @@
 *.yml text eol=lf
 *.md text eol=lf
 *.pdf binary
+output/pdf/ReservaLab_Entrega_3_PREPARACAO.pdf export-ignore

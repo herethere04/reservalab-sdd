@@ -1,0 +1,6 @@
+GET /health 200 {'status': 'ok'}
+GET /rooms 200 {'rooms': [{'id': 1, 'name': 'Sala 1', 'capacity': 4}, {'id': 2, 'name': 'Sala 2', 'capacity': 8}]}
+POST /bookings 201 {'id': '9625ce35-cde7-43b6-ad12-9057dd437907', 'room_id': 1, 'student_name': 'Grupo Teste Empacotamento', 'starts_at': '2026-10-21T13:27:00Z', 'ends_at': '2026-10-21T14:27:00Z', 'participants': 2, 'status': 'active'}
+Etapa inicial aprovada; próxima etapa verifica reabertura do volume em outro contêiner.
+Após recriação da API: HTTP 200 {'bookings': [{'id': '9625ce35-cde7-43b6-ad12-9057dd437907', 'room_id': 1, 'student_name': 'Grupo Teste Empacotamento', 'starts_at': '2026-10-21T13:27:00Z', 'ends_at': '2026-10-21T14:27:00Z', 'participants': 2, 'status': 'active'}]}
+EMPACOTAMENTO APROVADO: saúde, criação e volume persistente conferidos.
