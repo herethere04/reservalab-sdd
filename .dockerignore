@@ -5,7 +5,3 @@ __pycache__
 data
 evidence
 *.zip
-output
-docs
-tmp
-release-assets

@@ -1,15 +1,10 @@
 __pycache__/
 *.py[cod]
 .venv/
-.report-venv/
 data/
 *.db
 *.db-shm
 *.db-wal
 evidence/latest/
-evidence/coverage/
-evidence/video/
-release-assets/
-tmp/
 .env
 .DS_Store
