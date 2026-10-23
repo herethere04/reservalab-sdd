@@ -1,0 +1,30 @@
+     1 """Casos de uso; o relógio injetável permite testes determinísticos."""
+     2 
++    3 from collections.abc import Callable
++    4 from datetime import datetime, timezone
++    5 from pathlib import Path
+     6 
++    7 from .domain import DomainError, validate_payload
++    8 from .repository import BookingRepository
+     9 
+    10 
++   11 class BookingService:
+    12     """Interface da aplicação consumida pela API e pelos testes."""
+    13 
++   14     def __init__(self, db_path: str | Path, now: Callable[[], datetime] | None = None):
++   15         self.repository = BookingRepository(db_path)
++   16         self.now = now if now is not None else lambda: datetime.now(timezone.utc)
+    17 
++   18     def list_rooms(self) -> list[dict]:
++   19         return self.repository.list_rooms()
+    20 
++   21     def create_booking(self, payload: object) -> dict:
++   22         return self.repository.create_booking(validate_payload(payload, self.now()))
+    23 
++   24     def list_bookings(self) -> list[dict]:
++   25         return self.repository.list_bookings()
+    26 
++   27     def cancel_booking(self, booking_id: str) -> dict:
++   28         if not isinstance(booking_id, str) or not booking_id:
++   29             raise DomainError("booking_not_found", "Reserva não encontrada.", 404)
++   30         return self.repository.cancel_booking(booking_id)

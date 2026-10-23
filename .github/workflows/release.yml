@@ -1,0 +1,73 @@
+name: Release final v1.0.0
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: Link HTTPS real do vídeo da equipe (3 a 5 minutos)
+        type: string
+        required: true
+      homologated:
+        description: Confirmo a homologação humana do commit final de main e o acesso ao vídeo
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: write
+  pull-requests: read
+concurrency:
+  group: release-v1.0.0
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VIDEO_URL: ${{ inputs.video_url }}
+      HOMOLOGATED: ${{ inputs.homologated }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify release conditions
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$HOMOLOGATED" = "true"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq '.protected')" = "true"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq '.commit.sha')" = "$GITHUB_SHA"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" --jq 'length')" = "0"
+          if git ls-remote --exit-code --tags origin refs/tags/v1.0.0; then
+            echo 'A tag v1.0.0 já existe; não será sobrescrita.'
+            exit 1
+          fi
+          python3 -c 'from urllib.parse import urlsplit; import os; p=urlsplit(os.environ["VIDEO_URL"]); assert p.scheme == "https" and p.hostname and not p.username and not p.password, "URL de vídeo inválido"'
+      - name: Build and execute final test harness with coverage
+        run: |
+          docker build -t reservalab:release .
+          mkdir -p evidence/final
+          chmod 777 evidence/final
+          docker run --rm -v "$PWD/evidence/final:/app/evidence/final" reservalab:release python scripts/run_coverage.py --output-dir /app/evidence/final
+      - name: Prepare final document and versioned package
+        run: |
+          python3 -m venv .report-venv
+          .report-venv/bin/python -m pip install -r scripts/requirements-report.txt
+          .report-venv/bin/python scripts/prepare_release_assets.py --commit "$GITHUB_SHA" --video-url "$VIDEO_URL" --evidence-dir evidence/final
+      - name: Publish official release and attachments
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release create v1.0.0 --target "$GITHUB_SHA" --draft --title 'ReservaLab v1.0.0 - Entrega Final' --notes-file release-assets/RELEASE_NOTES.md
+          gh release upload v1.0.0 release-assets/*
+          gh release edit v1.0.0 --draft=false
+      - name: Preserve execution evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-evidence-${{ github.run_id }}
+          path: |
+            evidence/final/
+            release-assets/
+          if-no-files-found: warn
+          retention-days: 90

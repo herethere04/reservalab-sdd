@@ -1,0 +1,2 @@
+# Somente a geração documental; aplicação, harness e cobertura não dependem disto.
+reportlab==4.4.9
