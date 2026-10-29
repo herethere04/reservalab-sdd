@@ -1,0 +1,81 @@
+     1 """Erros e validações independentes de HTTP e persistência."""
+     2 
++    3 from datetime import datetime, timezone
++    4 import re
+     5 
+     6 
++    7 class DomainError(Exception):
+     8     """Falha esperada, com código estável e status da resposta HTTP."""
+     9 
++   10     def __init__(self, code: str, message: str, status: int = 400):
++   11         super().__init__(message)
++   12         self.code = code
++   13         self.message = message
++   14         self.status = status
+    15 
+    16 
++   17 REQUIRED_FIELDS = {"room_id", "student_name", "starts_at", "ends_at", "participants"}
++   18 TIMESTAMP = re.compile(
++   19     r"^\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}"
+    20     r"(?::(?P<seconds>\d{2})(?:\.(?P<fraction>\d+))?)?"
+    21     r"(?:[Zz]|[+-](?:[01]\d|2[0-3]):[0-5]\d)$"
+    22 )
+    23 
+    24 
++   25 def parse_datetime(value: object, field: str) -> datetime:
+    26     """Aceita data/hora ISO com fuso explícito e precisão de minutos."""
++   27     match = TIMESTAMP.fullmatch(value) if isinstance(value, str) else None
++   28     if match is None:
++   29         raise DomainError("invalid_datetime", f"{field} exige data/hora ISO com fuso explícito.")
++   30     seconds = match.group("seconds")
++   31     fraction = match.group("fraction")
++   32     if (seconds is not None and seconds != "00") or (fraction and any(c != "0" for c in fraction)):
++   33         raise DomainError("invalid_datetime", f"{field} deve usar minutos inteiros (segundos iguais a zero).")
++   34     try:
++   35         parsed = datetime.fromisoformat(value.upper().replace("Z", "+00:00"))
++   36         return parsed.astimezone(timezone.utc)
++   37     except (ValueError, OverflowError) as exc:
++   38         raise DomainError("invalid_datetime", f"{field} contém data/hora inválida.") from exc
+    39 
+    40 
++   41 def format_datetime(value: datetime) -> str:
+    42     """Serializa UTC em formato estável, também ordenável no SQLite."""
++   43     return value.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    44 
+    45 
++   46 def validate_payload(payload: object, now: datetime) -> dict:
+    47     """Valida dados independentes da sala e devolve valores normalizados."""
++   48     if not isinstance(payload, dict) or set(payload) != REQUIRED_FIELDS:
++   49         raise DomainError(
++   50             "invalid_payload",
++   51             "Informe exatamente room_id, student_name, starts_at, ends_at e participants.",
+    52         )
++   53     room_id = payload["room_id"]
++   54     if type(room_id) is not int or room_id < 1:
++   55         raise DomainError("invalid_room_id", "room_id deve ser um inteiro positivo.")
++   56     name = payload["student_name"]
++   57     if not isinstance(name, str) or not 2 <= len(name.strip()) <= 100:
++   58         raise DomainError("invalid_student_name", "student_name deve ter entre 2 e 100 caracteres após remover espaços externos.")
++   59     try:
++   60         name.encode("utf-8")
++   61     except UnicodeEncodeError as exc:
++   62         raise DomainError("invalid_student_name", "student_name deve conter caracteres Unicode válidos.") from exc
++   63     participants = payload["participants"]
++   64     if type(participants) is not int or participants < 1:
++   65         raise DomainError("invalid_participants", "participants deve ser um inteiro positivo.")
++   66     start = parse_datetime(payload["starts_at"], "starts_at")
++   67     end = parse_datetime(payload["ends_at"], "ends_at")
++   68     duration = (end - start).total_seconds() / 60
++   69     if not 30 <= duration <= 120:
++   70         raise DomainError("invalid_duration", "A reserva deve durar entre 30 e 120 minutos.")
++   71     if now.tzinfo is None or now.utcoffset() is None:
++   72         raise ValueError("O relógio da aplicação deve fornecer datetime com fuso horário.")
++   73     if start < now:
++   74         raise DomainError("start_in_past", "O início da reserva não pode estar no passado.")
++   75     return {
++   76         "room_id": room_id,
++   77         "student_name": name.strip(),
++   78         "starts_at": format_datetime(start),
++   79         "ends_at": format_datetime(end),
++   80         "participants": participants,
+    81     }

@@ -10,6 +10,7 @@ from uuid import UUID
 
 from reservalab.domain import DomainError
 from reservalab.service import BookingService
+from reservalab.repository import BookingRepository
 
 
 NOW = datetime(2030, 1, 1, 8, 0, tzinfo=timezone.utc)
@@ -44,6 +45,22 @@ class BookingServiceTests(unittest.TestCase):
     def test_seed_rooms_have_documented_capacities(self):
         rooms = self.service.list_rooms()
         self.assertEqual({room["id"]: room["capacity"] for room in rooms}, {1: 4, 2: 8})
+
+    def test_memory_database_is_rejected_explicitly(self):
+        with self.assertRaisesRegex(ValueError, ":memory:"):
+            BookingRepository(":memory:")
+
+    def test_naive_internal_clock_is_rejected_without_creating_booking(self):
+        service = BookingService(self.db_path, now=lambda: NOW.replace(tzinfo=None))
+        with self.assertRaisesRegex(ValueError, "fuso"):
+            service.create_booking(self.payload())
+        self.assertEqual(service.list_bookings(), [])
+
+    def test_invalid_cancel_identifier_is_not_found(self):
+        for identifier in [None, "", 7]:
+            with self.subTest(identifier=identifier), self.assertRaises(DomainError) as caught:
+                self.service.cancel_booking(identifier)
+            self.assertEqual(caught.exception.status, 404)
 
     def test_new_database_starts_without_bookings(self):
         self.assertEqual(self.service.list_bookings(), [])
