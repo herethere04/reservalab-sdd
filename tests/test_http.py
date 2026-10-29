@@ -2,6 +2,7 @@
 
 import http.client
 import json
+import socket
 import tempfile
 import threading
 import unittest
@@ -59,6 +60,38 @@ class HttpIntegrationTests(unittest.TestCase):
         status, body = self.request("GET", "/rooms")
         self.assertEqual(status, 200)
         self.assertEqual({r["id"]: r["capacity"] for r in body["rooms"]}, {1: 4, 2: 8})
+
+    def raw_post(self, headers, body=b"", close_write=False):
+        with socket.create_connection(self.server.server_address, timeout=5) as connection:
+            request = b"POST /bookings HTTP/1.0\r\nContent-Type: application/json\r\n" + headers + b"\r\n" + body
+            connection.sendall(request)
+            if close_write:
+                connection.shutdown(socket.SHUT_WR)
+            response = http.client.HTTPResponse(connection)
+            response.begin()
+            return response.status, json.loads(response.read())
+
+    def test_invalid_or_missing_content_length_is_rejected(self):
+        for header in [b"", b"Content-Length: -1\r\n", b"Content-Length: abc\r\n"]:
+            with self.subTest(header=header):
+                self.assert_error(self.raw_post(header), 400)
+        self.assertEqual(self.request("GET", "/bookings"), (200, {"bookings": []}))
+
+    def test_transfer_encoding_is_rejected(self):
+        self.assert_error(self.raw_post(b"Transfer-Encoding: chunked\r\nContent-Length: 0\r\n"), 400)
+
+    def test_truncated_body_is_rejected_after_client_eof(self):
+        self.assert_error(self.raw_post(b"Content-Length: 10\r\n", body=b"{}", close_write=True), 400)
+
+    def test_head_has_no_body_and_reports_allowed_method_and_version(self):
+        connection = http.client.HTTPConnection(*self.server.server_address, timeout=5)
+        self.addCleanup(connection.close)
+        connection.request("HEAD", "/health")
+        response = connection.getresponse()
+        self.assertEqual(response.status, 405)
+        self.assertEqual(response.getheader("Allow"), "GET")
+        self.assertIn("ReservaLab/1.0.0", response.getheader("Server"))
+        self.assertEqual(response.read(), b"")
 
     def test_full_create_list_conflict_cancel_and_rebook_lifecycle(self):
         self.assertEqual(self.request("GET", "/bookings"), (200, {"bookings": []}))

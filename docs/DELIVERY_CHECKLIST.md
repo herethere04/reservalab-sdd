@@ -1,25 +1,31 @@
-# Conferência da Entrega 2
+# Checklist da Entrega 3
 
-Issue #14. Preparação assistida pelo Codex; revisão e integração dependem dos integrantes.
+Central #21; frentes #22, #23 e #24. Prazo: 25/10/2026, 23h55 (Brasília).
 
-- [x] Repositório público identificado e fontes atuais de develop consultados.
-- [x] SPEC e ADRs lidos; contratos funcionais preservados.
-- [x] CT-15 detalhado e testado como processo real.
-- [x] Suíte local ampliada: 50 testes, 0 falhas, 0 erros.
-- [x] Mesma suíte aprovada no Docker em CPython 3.13.7; logs recuperados e hashes conferidos.
-- [x] Erros antigos, validações humanas e refinamentos novos distinguidos.
-- [x] Histórico real de PRs/revisões, Issues fechadas e exceção do PR #11 registrados.
-- [x] README com instalação, execução, fluxo e decisões.
-- [x] Relatório com defesa técnica, relato do histórico e os quatro pilares éticos exigidos.
-- [x] Matriz documental das quatro ferramentas, com fontes oficiais e impacto observado separado do uso não realizado.
-- [x] PDF mapeia os cinco itens de submissão; passagem final de 50/50 (100%), sem alegar cobertura de código.
-- [x] PDF consolidado de 13 páginas atualizado pelo escopo completo, renderizado e conferido; atualizar após eventuais alterações de revisão.
-- [ ] Outro integrante revisou o novo PR com a própria conta.
-- [ ] Check harness do commit final aprovado.
-- [ ] Integrar feature/entrega-2 em develop após aprovação.
-- [ ] Conferir #13 e concluir promoção revisada para main.
-- [ ] Líder e todos os demais integrantes enviam o mesmo PDF consolidado pela Sala Online.
+## Preparação técnica (assistida)
 
-Resultados de Docker e CI devem ser conferidos em [EXECUTION.md](EXECUTION.md), sem reutilizar um resultado histórico como se pertencesse à nova suíte.
+- [x] Enunciado completo de duas páginas e escopo funcional anterior conferidos.
+- [x] Baseline main 5be5482: 50/50 testes reais em 20/10.
+- [x] SPEC As-Built, componentes, esquema SQLite, contratos e limites documentados.
+- [x] Comando de cobertura de linhas com JSON/HTML/fontes anotados e teste que inclui módulo não importado.
+- [x] Cenários adicionais de protocolo HTTP, CLI e demonstração preparados, sem ocultar falhas.
+- [x] README com comandos únicos e alternativa local, variáveis/argumentos reais.
+- [x] Roteiro de vídeo e demonstração HTTP real preparados; gravação atribuída a #24.
+- [x] Fluxo de release com validação de main, homologação, testes/cobertura, pacote/PDF/checksums preparado.
+- [x] Execuções finais local e padronizada: 64/64 testes, 223/223 linhas críticas e 243/243 linhas totais; 20 hashes comuns conferidos.
+- [ ] Check CI do commit publicado da proposta conferido.
+- [x] PDF de preparação de 5 páginas renderizado e conferido (não submetível enquanto faltarem vídeo/release).
 
-O planejamento anterior está no [histórico da Entrega 1](https://github.com/herethere04/reservalab-sdd/blob/bffa8f1c0ce0a5ecf11007598cf0e133d40e7dd6/docs/DELIVERY_CHECKLIST.md). Identificação acadêmica completa no README e no relatório.
+## Fechamento humano e publicação
+
+- [ ] g0bss confere As-Built, README, evidências e relatório; revisão real do PR.
+- [ ] Claneeer homologa testes/cobertura e reprodução, registra ambiente/resultado/commit reais.
+- [ ] eddyocn grava/publica vídeo real de 3 a 5 min e verifica acesso do professor.
+- [ ] Feedback resolvido, checks aprovados, proposta integrada em develop.
+- [ ] Promoção revisada para main integrada; main protegida; nenhum PR da entrega aberto.
+- [ ] Release v1.0.0 publicada no commit final homologado de main, sem sobrescrever tag anterior.
+- [ ] PDF definitivo da release contém URL da release, quatro nomes/RAs, testes/cobertura, vídeo e resumo executivo/retrospectiva.
+- [ ] Links e arquivo final conferidos por integrantes com suas próprias contas.
+- [ ] Envio acadêmico realizado conforme orientação da disciplina, sem presumir submissão por outra pessoa.
+
+As aprovações anteriores pertencem aos commits que avaliaram. A nova proposta não recebe aprovação automática de uma revisão antiga. O histórico das checklists da Entrega 2 permanece no Git.
