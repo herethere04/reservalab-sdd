@@ -12,10 +12,10 @@ Resultados reais: [execução](EXECUTION.md), [cobertura local](../evidence/entr
 
 | Item | Preparação e fechamento |
 | --- | --- |
-| Link direto da release v1.0.0 | Publicado pelo workflow manual após homologação/main; endereço previsto não é tratado como release existente. |
+| [Link direto da release v1.0.0](https://github.com/herethere04/reservalab-sdd/releases/tag/v1.0.0) | Publicado pelo workflow manual após homologação/main; endereço previsto não é tratado como release existente. |
 | Integrantes e RAs | Dados reais autorizados no README e no gerador/PDF; não são fixtures de testes. |
 | Testes e cobertura | Harness real, log/summary, linhas executadas/executáveis e hashes; anexos gerados na publicação. |
-| Vídeo funcional 3-5 min | Eduardo grava e publica pela Issue #24; roteiro em DEMO.md. |
+| [Vídeo funcional 3-5 min](https://drive.google.com/file/d/1YFXjHPLM7dXeY2pUN379TWlcEbDq07py/view) | Eduardo grava e publica pela Issue #24; roteiro em DEMO.md. |
 | Resumo executivo e lições | PDF gerado com escopo, resultado, limites, retrospectiva e uso de IA sem métricas inventadas. |
 
 A prévia `output/pdf/ReservaLab_Entrega_3_PREPARACAO.pdf` mostra a estrutura e evidências atuais, mas está marcada para não submeter. O PDF definitivo **ReservaLab_Entrega_3.pdf** será anexo da release v1.0.0 e receberá o link real do vídeo informado pela equipe. Guia de geração/publicação: [RELEASE.md](RELEASE.md).
